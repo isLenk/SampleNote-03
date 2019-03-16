@@ -1,0 +1,39 @@
+﻿Sieve
+Proctor
+Marshall
+Hydrometer
+Fractured Face
+GPI
+USC
+Plasticity Index (PI)
+Wash Sieve (Clay)
+Hydraulic Conductivity
+Direct Shear
+Triaxial
+Bulk Density
+Specific Gravity
+BSG
+Theoretical Specific Gravity (TSG)
+Sand Equivalence
+Percent Manufactured Fines
+Passing 80 Microns
+LA Abrasion
+Micro Deval
+Flat and Elongated
+Shape Factor
+Mill Abrasion
+Consolidation
+Sulfate (SO4)
+Organic Content
+Sample Tube Rental, Extrusion, and Penetrometer
+Damaged Sample Tube
+Laboratory Vane Shear Testing, ASTM D4648
+Moisture Content with Geotechnical Investigation, ASTM D2216
+Moisture Content, Single Sample, ASTM D2216
+Unified Soil Classification
+Group Index
+Unit Weight of Undisturbed Samples, Tube Sample
+Unit Weight of Undisturved Samples, Chunk Sample
+Moisture-Density Standard Proctor, Cohesive Soil
+Moisture-Density Standard Proctor, Granular Soil
+Moisture-Density Proctor

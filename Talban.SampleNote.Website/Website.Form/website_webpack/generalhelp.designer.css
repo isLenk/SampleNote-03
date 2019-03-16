@@ -1,0 +1,47 @@
+
+/* Assign Color Variables to Root */
+:root {
+    --modest-blue: rgb(26, 89, 154);
+    --body-color: rgb(43, 43, 43);
+    --clifton-blue: rgb(1, 118, 191);
+}
+
+body {
+  background-color: rgb(29, 29, 29);
+  color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", Verdana;
+  font-size: 20px;
+  margin-top: 105px;
+}
+
+h2 {
+
+}
+
+h3 {
+  color: rgb(200, 200, 200)
+}
+
+li {
+  padding-bottom: 15px;
+}
+.samplenote_header {
+    padding-left: 10px;
+    background-color: var(--modest-blue);
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+
+}
+
+.bodycontainer {
+  background-color: var(--body-color);
+  margin-top: 0px;
+  padding: 30px 15px 40px 15px;
+  margin-bottom: 5%;
+}
+
+.form_description {
+  color: rgb(185, 185, 185);
+}

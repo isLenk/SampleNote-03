@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<apis>
+
+  <api name="Excel API">
+    <extensions>Excel Workbook|*.xlsx|Excel Macro-Enabled Workbook|*.xlsm</extensions>
+    <module>ExcelAPI.dll</module>
+  </api>
+
+  <api name="LCSS">
+    <extensions>Lances Custom SSheet|*.lcss</extensions>
+    <module>LCSSAPI.dll</module>
+  </api>
+  
+</apis>

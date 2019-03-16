@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> SampleNote General Help </title>
+		<link rel="stylesheet" type="text/css" href="Website_Resources\website.designer.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+	<body>
+		<div style="border:40px solid rgb(50,50,50);background-color: rgb(50,50,50);margin-left: 0px">
+
+		</div>
+
+		<header style="color: white">
+			<p style="margin:2px; font-size: 20px; padding: 5px"> SampleNote "ReadMe.html"</p>
+		</header>
+
+		<div style="margin-left:15px">
+			<h1> SampleNote General Help Page </h1>
+			<p> This page contains information about the programs errors or questions </p>
+
+			<h1> Design </h1>
+
+			<p class="questionHeader"> How are the tests color coded </p>
+			<div class="colorbox">
+				<p style="color: white; border-left: 2px solid white; padding-left: 5px"> White: Idle </p>
+				<p style="color: white; border-left: 2px solid limegreen; padding-left: 5px"> Green: Test started </p>
+				<p style="color: white; border-left: 2px solid red; padding-left: 5px"> Red (w/ strikethrough): Test is complete </p>
+			</div>
+
+
+
+			<h1> Help </h1>
+
+			<h2> Usage </h2>
+
+				<p class="questionHeader"> How to manually edit a sample (directly on the Excel File) </p>
+				<div class="questionDescription">
+					In case of a mistake, it is possible to revert a sample. Note that it isn't very user friendly
+					<ol>
+						<li> Close the program, then open and unprotect the Excel worksheet. </li>
+						<li> Locate the Sample </li>
+						<li> Set the Status fill to <font color="orange"> No Fill </font> (If it is green) </li>
+						<li> Find the test that was mistakenly modified, set its color to either black, or the green </li>
+					</ol>
+				</div>
+
+				<p class="questionHeader"> How to add more tests to the Test List </p>
+				<div class="questionDescription">
+					If the button to add tests does not appear on the form. Locate the localappdata/SampleNote folder and open up testList.txt, then add the tests in a new line
+				</div>
+
+
+				<p class="questionHeader"> Where are the program files located </p>
+				<div class="questionDescription">
+					The resource files are located in the <font color="orange" class="tooltip"> <span class="tooltiptext"> %localappdata%\SampleNote </span> Local AppData Folder </font> <br>
+					The program files are located in the <font color="orange" class="tooltip"> <span class="tooltiptext"> %programfiles(x86)%\SampleNote </span> Program Files (x86) Folder </font>
+				</div>
+
+			<br><br>
+			<h2> General Questions </h2>
+
+			<p class="questionHeader"> The Program Froze </p>
+			<div class="questionDescription">
+				There is nothing you can do about that, though you can write down what you did prior to the crash so it can be fixed in a later update.
+				Unless the whole program froze, then you can just close the program, run the "Brute Close Excel Process.cmd" in the "Application Resources/Batch Shortcuts" folder, and relaunch the program
+			</div>
+
+			<p class="questionHeader"> Why does SampleNote require Administrator Priviledges </p>
+			<div class="questionDescription">
+				SampleNote writes to Excel files but also modifies files it created.
+			</div>
+
+			<p class="questionHeader"> Cannot write to Excel file, (read only) </p>
+			<div class="questionDescription">
+				Make sure SampleNote is closed before opening the file. If SampleNote is closed but the problem still occurs, that is due to an Excel process still active. <br>
+				Run the Batch Shortcut named <font color="orange"> "Brute Close Excel Processes.cmd" </font> and reopen the file.
+
+				<img src="readmefiles\excel_readonly_window.PNG" alt="image of readonly window">
+			</div>
+
+			<p class="questionHeader"> How to move the forms to different displays (monitor) </p>
+			<div class="questionDescription">
+				If the on-form button is missing you can use windows built in shortcut <br>
+				On the keyboard, hold <font color="orange"> Windows Key & LShift + Left/Right key </font> to move the form.
+			</div>
+
+			<p class="questionHeader"> Samples appear on program but are not written/ modified on Excel File </p>
+			<p class="questionDescription">
+				A window may have appeared previously that asked to write to a new file, try checking if any new documents have been created. <br>
+				An easy way is to open up <font color="orange"> File Explorer </font> and check Quick access, Recent Files
+			</p>
+
+
+			<h1> Batch Shortcuts </h1>
+			<p style="margin-left: 15px"> The shortcuts are located in the Local AppData folder </p>
+			<p class="questionHeader"> Brute Close Excel Processes </p>
+			<div class="questionDescription">
+				Requires Administrator: <br>
+				<div class="codebox">
+					taskkill /F /IM EXCEL.exe /T
+					start EXCEL.exe
+				</div>
+
+			</div>
+
+			<h1> Known Problems </h1>
+				<ol>
+					<li> Excel Processes are left open even after properly closing the application </li>
+					<li> The user is prompted with an overwrite save window and program modifications are sent to another file </li>
+				</ol>
+
+			<h1> Fixes </h1>
+			<ol>
+				<li> Replaced ListLayout code with default dock </li>
+				<li> Test Started Color changed to Dark Green with underline </li>
+				<li> Project Location replaced with Project Name </li>
+				<li> Sample Number Column Name replaced to simply "#" </li>
+			</ol>
+		</div>
+
+		<footer>
+			SampleNote | Lance Talban
+		</footer>
+	</body>
+</html>

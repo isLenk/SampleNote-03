@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E519D4E-8820-437A-AD0A-8DF199063AB6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SampleNote.Main</RootNamespace>
+    <AssemblyName>SampleNote</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>samplenote.256.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Modals\Control_Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\Control_Designer.Designer.cs">
+      <DependentUpon>Control_Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Data.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Data.Designer.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Launcher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Launcher.Designer.cs">
+      <DependentUpon>Launcher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Monitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Monitor.Designer.cs">
+      <DependentUpon>Monitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\History_Reader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\History_Reader.Designer.cs">
+      <DependentUpon>History_Reader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\Text_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\Text_Editor.Designer.cs">
+      <DependentUpon>Text_Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\User_Control.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\User_Control.Designer.cs">
+      <DependentUpon>User_Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Editor\SampleLog.editor.cs" />
+    <Compile Include="Modules\API.Remote.cs" />
+    <Compile Include="Modules\History.Remote.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ConfigUtility.cs" />
+    <Compile Include="Utility\HeaderUtility.cs" />
+    <Compile Include="Utility\StringParserUtility.cs" />
+    <Compile Include="Utility\TooltipUtility.cs" />
+    <Compile Include="Utility\TweenUtility.cs" />
+    <EmbeddedResource Include="Modals\Control_Designer.resx">
+      <DependentUpon>Control_Designer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Data.resx">
+      <DependentUpon>Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Launcher.resx">
+      <DependentUpon>Launcher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Monitor.resx">
+      <DependentUpon>Monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modals\History_Reader.resx">
+      <DependentUpon>History_Reader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modals\Text_Editor.resx">
+      <DependentUpon>Text_Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\User_Control.resx">
+      <DependentUpon>User_Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Resources\config\PrintTag.label" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\config\usercontrol.designer.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\background\api.available.xml" />
+    <Content Include="Resources\docs\Developer\API.Methods.txt" />
+    <Content Include="Resources\docs\User\Information.txt" />
+    <Content Include="Resources\ico\SampleNote_Icon_256.ico" />
+    <None Include="Resources\img\SampleNote Icon 256.png" />
+    <None Include="Resources\img\Half Triangle.png" />
+    <None Include="Resources\img\Locked.png" />
+    <None Include="Resources\img\Unlocked.png" />
+    <None Include="Resources\img\CliftonLogo.235.png" />
+    <None Include="Resources\img\Clifton Logo.Dark.235.psd.png" />
+    <None Include="Resources\img\Button Vector _ Create File.png" />
+    <None Include="Resources\img\Button Vector - Load File.png" />
+    <None Include="Resources\img\Button Vector - Create File.png" />
+    <None Include="Resources\img\Button Vector - Load File 2.png" />
+    <None Include="Resources\img\Reading Logs.png" />
+    <Content Include="samplenote.256.ico" />
+    <Content Include="SampleNote_Icon_256.ico" />
+    <None Include="Resources\img\Loading File.png" />
+    <None Include="Resources\img\Denied File.png" />
+    <None Include="Resources\img\Accessing File.png" />
+    <None Include="Resources\img\Verifying File.png" />
+    <None Include="Resources\background\test.log.dat" />
+    <Content Include="Resources\config\test_list.txt" />
+    <None Include="Resources\img\Upload Graphic.png" />
+    <None Include="Resources\recent\recent.log.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelAPI\Talban.SampleNote.Module.ExcelAPI.csproj">
+      <Project>{bf2fdcd5-45a5-4a64-a3d7-a7fc613425ba}</Project>
+      <Name>Talban.SampleNote.Module.ExcelAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\qbak\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
