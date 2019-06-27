@@ -142,7 +142,7 @@
             this.label1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label1.Size = new System.Drawing.Size(194, 32);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Dec 2, 2019 06:13:00AM";
+            this.label1.Text = "March 31, 2019 6:43:52 PM";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // History_Reader

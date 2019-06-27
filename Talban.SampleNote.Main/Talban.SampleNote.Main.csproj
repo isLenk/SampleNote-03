@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,9 +55,15 @@
     <ApplicationIcon>samplenote.256.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DYMO.Label.Framework">
+      <HintPath>bin\Debug\Lib\DYMO.Label.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>bin\Debug\Lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modals\Admittance_Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\Admittance_Info.Designer.cs">
+      <DependentUpon>Admittance_Info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modals\Control_Designer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +111,12 @@
     <Compile Include="Modals\History_Reader.Designer.cs">
       <DependentUpon>History_Reader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modals\SQLReader.TestCodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\SQLReader.TestCodes.Designer.cs">
+      <DependentUpon>SQLReader.TestCodes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modals\Text_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,11 +134,15 @@
     <Compile Include="Modules\History.Remote.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\CacheUtility.cs" />
     <Compile Include="Utility\ConfigUtility.cs" />
     <Compile Include="Utility\HeaderUtility.cs" />
     <Compile Include="Utility\StringParserUtility.cs" />
     <Compile Include="Utility\TooltipUtility.cs" />
     <Compile Include="Utility\TweenUtility.cs" />
+    <EmbeddedResource Include="Modals\Admittance_Info.resx">
+      <DependentUpon>Admittance_Info.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modals\Control_Designer.resx">
       <DependentUpon>Control_Designer.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modals\History_Reader.resx">
       <DependentUpon>History_Reader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modals\SQLReader.TestCodes.resx">
+      <DependentUpon>SQLReader.TestCodes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modals\Text_Editor.resx">
       <DependentUpon>Text_Editor.cs</DependentUpon>
@@ -137,6 +177,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Modules\DYMO.Framework.Handler.cs" />
+    <None Include="Resources\config\monitor.column.positions.config" />
+    <None Include="Resources\config\column.positions.config" />
     <None Include="Resources\config\PrintTag.label" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -150,6 +193,7 @@
     <None Include="Resources\config\usercontrol.designer.config">
       <SubType>Designer</SubType>
     </None>
+    <Compile Include="Utility\SQL.TestCodes.Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -217,7 +261,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\cache\" />
+    <Folder Include="Resources\database\" />
     <Folder Include="Resources\qbak\" />
+    <Folder Include="Resources\reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Monitor));
             this.Form_Header = new System.Windows.Forms.Panel();
+            this.BORDER = new System.Windows.Forms.PictureBox();
+            this.label_clock = new System.Windows.Forms.Label();
             this.button_exitform = new System.Windows.Forms.Button();
             this.FormName = new System.Windows.Forms.Label();
-            this.label_clock = new System.Windows.Forms.Label();
-            this.BORDER = new System.Windows.Forms.PictureBox();
             this.panel_columns = new System.Windows.Forms.Panel();
             this.M = new System.Windows.Forms.Label();
             this.G = new System.Windows.Forms.Label();
@@ -55,6 +56,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.DataExpansionTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.Form_Header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BORDER)).BeginInit();
             this.panel_columns.SuspendLayout();
@@ -77,6 +79,27 @@
             this.Form_Header.Name = "Form_Header";
             this.Form_Header.Size = new System.Drawing.Size(1162, 39);
             this.Form_Header.TabIndex = 3;
+            // 
+            // BORDER
+            // 
+            this.BORDER.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BORDER.Enabled = false;
+            this.BORDER.Image = global::SampleNote.Main.Properties.Resources.Half_Triangle;
+            this.BORDER.Location = new System.Drawing.Point(221, 0);
+            this.BORDER.Name = "BORDER";
+            this.BORDER.Size = new System.Drawing.Size(35, 39);
+            this.BORDER.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.BORDER.TabIndex = 5;
+            this.BORDER.TabStop = false;
+            // 
+            // label_clock
+            // 
+            this.label_clock.AutoSize = true;
+            this.label_clock.Location = new System.Drawing.Point(383, 9);
+            this.label_clock.Name = "label_clock";
+            this.label_clock.Size = new System.Drawing.Size(38, 22);
+            this.label_clock.TabIndex = 4;
+            this.label_clock.Text = "DTP";
             // 
             // button_exitform
             // 
@@ -110,27 +133,6 @@
             this.FormName.TabIndex = 0;
             this.FormName.Text = " SampleNote Monitor";
             this.FormName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_clock
-            // 
-            this.label_clock.AutoSize = true;
-            this.label_clock.Location = new System.Drawing.Point(383, 9);
-            this.label_clock.Name = "label_clock";
-            this.label_clock.Size = new System.Drawing.Size(38, 22);
-            this.label_clock.TabIndex = 4;
-            this.label_clock.Text = "DTP";
-            // 
-            // BORDER
-            // 
-            this.BORDER.Dock = System.Windows.Forms.DockStyle.Left;
-            this.BORDER.Enabled = false;
-            this.BORDER.Image = global::SampleNote.Main.Properties.Resources.Half_Triangle;
-            this.BORDER.Location = new System.Drawing.Point(221, 0);
-            this.BORDER.Name = "BORDER";
-            this.BORDER.Size = new System.Drawing.Size(35, 39);
-            this.BORDER.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.BORDER.TabIndex = 5;
-            this.BORDER.TabStop = false;
             // 
             // panel_columns
             // 
@@ -216,6 +218,7 @@
             this.C.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.C.AutoSize = true;
+            this.C.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.C.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.C.ForeColor = System.Drawing.Color.White;
             this.C.Location = new System.Drawing.Point(206, 17);
@@ -418,6 +421,11 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "L0001";
             // 
+            // DataExpansionTooltip
+            // 
+            this.DataExpansionTooltip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(43)))));
+            this.DataExpansionTooltip.ForeColor = System.Drawing.Color.White;
+            // 
             // Monitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
@@ -478,5 +486,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolTip DataExpansionTooltip;
     }
 }

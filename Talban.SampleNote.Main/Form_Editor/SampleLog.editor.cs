@@ -9,15 +9,16 @@ using System.Text.RegularExpressions;
 
 namespace SampleNote.Main.Forms
 {
-    class SampleLog_FormEditor
+    public class SampleLog_FormEditor
     {
         // Listing of Variables
         // Constructing Classes for Utilities and Form Designers
         Utility.ConfigUtility designer = new Utility.ConfigUtility(@"./config/usercontrol.designer.config");
         Utility.StringParserUtility strParser = new Utility.StringParserUtility();
         Utility.TweenUtility Tween = new Utility.TweenUtility();
+        Modules.DYMO_LabelWriter DymoLabelWriter = new Modules.DYMO_LabelWriter();
         Modules.History history;
-        Modules.API remoteAPI;
+         Modules.API remoteAPI;
         List<Color> color_variant = new List<Color>();
         List<Color> test_colors = new List<Color>();
         Dictionary<string, int> columnPositions;
@@ -27,15 +28,21 @@ namespace SampleNote.Main.Forms
         ToolTip dataExpansionTooltip;
         TextBox lastInitialsBox = null;
         // Initialize variables
-        int last_displayedLogIndex = 0;
+        static int last_displayedLogIndex, log_index;
         int max_logsDisplayable = 17;
-        int log_index = 0;
+
         int panel_height;
-        
+        bool isMonitor = false;
+        public SampleLog_FormEditor monitor_object;
+
         // Prepare the form editor class variables
         public SampleLog_FormEditor(Panel panel_contents, Modules.API remoteAPI, Dictionary<string, int> columnPositions, ToolTip dataExpansionTooltip)
         {
             Console.WriteLine("Constructed SampleLog Editor");
+            if (panel_contents.FindForm().Name == "Monitor")
+            {
+                isMonitor = true;
+            }
             this.columnPositions = columnPositions;
             this.remoteAPI = remoteAPI;
             this.panel_contents = panel_contents;
@@ -92,13 +99,10 @@ namespace SampleNote.Main.Forms
             foreach (Panel pan in panel_contents.Controls)
             {
                 pan.Width = panel_contents.Width;
-                if (pan.Controls.ContainsKey("Tests_Panel"))
-                {
-                    FlowLayoutPanel testPanel = pan.Controls.Find("Tests_Panel", false)[0] as FlowLayoutPanel;
-                    testPanel.Size = new Size(panel_contents.Width - columnPositions["Tests Required"], panel_height);
-                    testPanel.Location = new Point(columnPositions["Tests Required"], testPanel.Location.Y);
-                }
 
+                FlowLayoutPanel testPanel = pan.Controls.Find(string.Format("Log Panel. {0}", pan.Name), false)[0] as FlowLayoutPanel;
+                testPanel.Size = new Size(panel_contents.Width - columnPositions["Tests Required"], panel_height);
+                testPanel.Location = new Point(columnPositions["Tests Required"], testPanel.Location.Y);
             }
         }
         // Recolors all the logs that are in the sample log container based on index
@@ -110,7 +114,7 @@ namespace SampleNote.Main.Forms
             }
         }
         // Creates a log using data from the log index
-        public void createLog(int log_index)
+        public void createLog(int log_index, bool print_dymo_label=false)
         {
             //Console.WriteLine("Constructing Log");
             panel_height = Int32.Parse(designer["panel.height"]);
@@ -118,7 +122,7 @@ namespace SampleNote.Main.Forms
             int yPosition = 22;
 
             Panel logPanel = new Panel();
-            logPanel.Name = string.Format("Log. {0}", log_index);
+            logPanel.Name = log_index.ToString(); // string.Format("Log. {0}", log_index);
             logPanel.BackColor = this.color_variant[(panel_contents.Controls.Count+1) % 2];
             logPanel.ForeColor = Color.White;
             logPanel.Margin = new Padding(0, 0, 0, 0);
@@ -126,7 +130,7 @@ namespace SampleNote.Main.Forms
             logPanel.Width = panel_contents.Width;
 
             FlowLayoutPanel testsPanel = new FlowLayoutPanel();
-            testsPanel.Name = "Tests_Panel";
+            testsPanel.Name = string.Format("Log Panel. {0}", log_index);
             testsPanel.FlowDirection = FlowDirection.LeftToRight;
             testsPanel.Anchor = AnchorStyles.Right & AnchorStyles.Left;
             testsPanel.WrapContents = false;
@@ -142,24 +146,32 @@ namespace SampleNote.Main.Forms
             sampleNumber.Location = new Point(columnPositions["Sample Number"], yPosition);
             sampleNumber.Font = new Font(sampleNumber.Font.Name, (float)14.25);
             sampleNumber.Tag = "Sample Number";
+            sampleNumber.AutoSize = false;
+            sampleNumber.Width = columnPositions["Project Number"] - sampleNumber.Left;
 
             Label projectNumber = new Label();
             projectNumber.Text = logData["Project Number"][0];
             projectNumber.ForeColor = Color.White;
             projectNumber.Location = new Point(columnPositions["Project Number"], yPosition);
             projectNumber.Tag = "Project Number";
+            projectNumber.AutoSize = false;
+            projectNumber.Width = columnPositions["Project Name"] - projectNumber.Left;
 
             Label projectName = new Label();
             projectName.Text = logData["Project Name"][0];
             projectName.ForeColor = Color.White;
             projectName.Location = new Point(columnPositions["Project Name"], yPosition);
             projectName.Tag = "Project Name";
+            projectName.AutoSize = false;
+            projectName.Width = columnPositions["Client Name"] - projectName.Left;
 
             Label clientName = new Label();
             clientName.Text = logData["Client Name"][0];
             clientName.ForeColor = Color.White;
             clientName.Location = new Point(columnPositions["Client Name"], yPosition);
             clientName.Tag = "Client Name";
+            clientName.AutoSize = false;
+            clientName.Width = columnPositions["Date Recieved"] - clientName.Left;
 
             Label dateRecieved = new Label();
             dateRecieved.Text = logData["Date Recieved"][0];
@@ -171,13 +183,16 @@ namespace SampleNote.Main.Forms
             { 
                 dataExpansionTooltip.SetToolTip(dateRecieved, (timePlaceholder.ToString("hh:mmtt")));
             }
-            
+            dateRecieved.AutoSize = false;
+            dateRecieved.Width = columnPositions["Samp. Description"] - dateRecieved.Left;
 
             Label sampleDescription = new Label();
             sampleDescription.Text = logData["Samp. Description"][0];
             sampleDescription.ForeColor = Color.White;
             sampleDescription.Location = new Point(columnPositions["Samp. Description"], yPosition);
             sampleDescription.Tag = "Samp. Description";
+            sampleDescription.AutoSize = false;
+            sampleDescription.Width = columnPositions["Tests Required"] - sampleDescription.Left;
 
             int prevRight = 0;
             foreach (string testName in logData["Tests Required"])
@@ -186,13 +201,23 @@ namespace SampleNote.Main.Forms
                 {
                     break;
                 }
-                Button testButton = new Button();
+                dynamic testButton;
+                if (isMonitor)
+                {
+                    testButton = new Label();
+                }
+                else
+                {
+                    testButton = new Button();
+                    (testButton as Button).MouseDown += TestButton_MouseClick;
+                    testButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                    testButton.FlatAppearance.BorderSize = 0;
+                    testButton.FlatAppearance.BorderColor = logPanel.BackColor;
+                }
+               
                 testButton.AutoSize = true;
                 testButton.Anchor = AnchorStyles.Left;
-                testButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                 testButton.FlatStyle = FlatStyle.Flat;
-                testButton.FlatAppearance.BorderSize = 0;
-                testButton.FlatAppearance.BorderColor = logPanel.BackColor;
                 testButton.Text = testName.Substring(1);
                 testButton.ForeColor = Color.White;
                 testButton.ContextMenu = testMenu;
@@ -202,10 +227,17 @@ namespace SampleNote.Main.Forms
                 testButton.Height = 30;
                 
                 prevRight = testButton.Location.X + testButton.Width + 3;
-                testButton.MouseDown += TestButton_MouseClick;
                 testsPanel.Controls.Add(testButton);
-            }
 
+                
+            }
+            
+            // Print the Label if the argument allows it
+            if (print_dymo_label)
+            {
+                // Pass the log data dictionary to the function
+                DymoLabelWriter.PrintLabel(logData);
+            }
 
             // Add all the sub columns to log panel
             logPanel.Controls.Add(sampleNumber);
@@ -243,7 +275,6 @@ namespace SampleNote.Main.Forms
             lastInitialsBox = initialsBox;
             initialsBox.KeyUp += InitialsBox_KeyUp;
 
-            history.write("yeet", "yeet");
             testButton.Controls.Add(initialsBox);
             initialsBox.Focus();
         }
@@ -268,10 +299,30 @@ namespace SampleNote.Main.Forms
 
         }
         // Simply edits the test buttons color
-        private void color_testButton(Button testButton, int new_testStatus)
+        private void color_testButton(Control testButton, int new_testStatus)
         {
             // Console.WriteLine("Writing Test Index: " + (new_testStatus - 1).ToString());
             testButton.ForeColor = test_colors[new_testStatus - 1];
+        }
+        // This one needs to loop through the contents to find the button similar to the one in the user control
+        private void monitor_colorTestButton(string panel_name, string button_text, int new_testStatus)
+        {
+            Control[] test_panels = panel_contents.Controls.Find(panel_name, true);
+
+            foreach (Control panel in test_panels)
+            {
+                foreach (Control testButton in panel.Controls)
+                {
+                    if (testButton.Text == button_text)
+                    {
+                        testButton.ForeColor = test_colors[new_testStatus - 1];
+                    }
+                }
+            }
+        }
+        private Panel find_monitorlog(string log_name)
+        {
+            return (Panel)panel_contents.Controls.Find(log_name, false)[0];
         }
         // Runs a tween and a recolor to indicate test completion, then remove log and add a new one
         private void hide_log(Panel log, bool complete=false)
@@ -353,11 +404,24 @@ namespace SampleNote.Main.Forms
                     {
                         color_testButton(testButton, 3);
                         hide_log(logPanel, complete: true);
+                        if (isMonitor == false)
+                        {
+                            monitor_object.monitor_colorTestButton(testButton.Parent.Name, testButton.Text, 3);
+                            monitor_object.hide_log(monitor_object.find_monitorlog(logPanel.Name), complete: true);
+                            history.write(String.Format("L{0:D4}", logIndex), String.Format("{0} completed log", initialsBox.Text.ToUpper()));
+
+                        }
                     }
                     else
                     {
                         color_testButton(testButton, new_teststatus);
+                        if (isMonitor == false)
+                        {
+                            monitor_object.monitor_colorTestButton(testButton.Parent.Name, testButton.Text, new_teststatus);
+                            history.write(String.Format("L{0:D4}", logIndex), String.Format("{0} modified log status. Test Status: [{1}]", initialsBox.Text.ToUpper(), new_teststatus));
+                        }
                     }
+
                     initialsBox.Dispose();
                 }
             }

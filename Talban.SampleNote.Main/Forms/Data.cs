@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Data.SQLite;
 
 namespace SampleNote.Main.Forms
 {
@@ -19,21 +20,41 @@ namespace SampleNote.Main.Forms
         Modules.API remoteAPI;
         testlist_module testlist;
         User_Control userControl;
+        Utility.UTILSQL_TestCode UTILSQL = new Utility.UTILSQL_TestCode();
+
         Bitmap image_locked = Properties.Resources.Locked;
         Bitmap image_unlocked = Properties.Resources.Unlocked;
         Modals.Text_Editor text_editor = null;
-
+        
         public Data(Modules.API remoteAPI, User_Control userControl)
         {
             InitializeComponent();
             new SampleNote.Main.Utility.HeaderUtility(Form_Header);
-            testlist = new testlist_module(listbox_testlist, textbox_filtersearch, label_itemcount, items);
+            testlist = new testlist_module(listbox_testlist, textbox_filtersearch, label_itemcount, LABEL_LTestsRequiredList, items, UTILSQL);
             this.remoteAPI = remoteAPI;
             this.userControl = userControl;
             this.button_samplenumber.Text = remoteAPI.pull_samplenum(1);
             lock_fields.Click += fieldLockMethod;
             lock_fields1.Click += fieldLockMethod;
             this.column_data = remoteAPI.fetch_columndata(inverted:true);
+
+            // Binding Handlers
+            Binding binding_label_sampnumber = new Binding("Text", button_samplenumber, "Text",
+                true, DataSourceUpdateMode.OnValidation);
+            Binding binding_label_client = new Binding("Text", textbox_clientname, "Text",
+                true, DataSourceUpdateMode.OnPropertyChanged);
+            Binding binding_label_projnumber = new Binding("Text", textbox_projectnumber, "Text",
+                true, DataSourceUpdateMode.OnPropertyChanged);
+            Binding binding_label_projname = new Binding("Text", textbox_projectname, "Text",
+                true, DataSourceUpdateMode.OnPropertyChanged);
+
+
+            // Add the bindings to the labels.
+            LABEL_LSampleNumber.DataBindings.Add(binding_label_sampnumber);
+            LABEL_LClient.DataBindings.Add(binding_label_client);
+            LABEL_LProjectNumber.DataBindings.Add(binding_label_projnumber);
+            LABEL_LProjectName.DataBindings.Add(binding_label_projname);
+            
         }
         
         private void fieldLockMethod(object sender, EventArgs e)
@@ -51,17 +72,25 @@ namespace SampleNote.Main.Forms
 
         class testlist_module
         {
-            string testsFile = @"./config/test_list.dat";
+            //string testsFile = @"./config/test_list.dat";
+            Utility.UTILSQL_TestCode UTILSQL;
+            List<string> TestNames;
             ListBox listbox_testlist;
             TextBox textbox_filtersearch;
             Label label_itemcount;
+            Label label_testList;
             List<string> items;
             
-            public testlist_module(ListBox testList, TextBox filterSearch, Label itemCount, List<string> items)
+            public testlist_module(ListBox testList, TextBox filterSearch, Label itemCount, Label lbl_testList, List<string> items, Utility.UTILSQL_TestCode UTILSQL)
             {
                 listbox_testlist = testList;
                 textbox_filtersearch = filterSearch;
                 label_itemcount = itemCount;
+                label_testList = lbl_testList;
+                this.UTILSQL = UTILSQL;
+                // Add Test List to TestNames
+                TestNames = UTILSQL.GetTestNames();
+
                 this.items = items;
                 listbox_testlist.SelectedIndexChanged += new System.EventHandler(test_selected);
                 textbox_filtersearch.TextChanged += new System.EventHandler(testfilter_textchanged);
@@ -71,6 +100,7 @@ namespace SampleNote.Main.Forms
             
             public void reset()
             {
+                TestNames = UTILSQL.GetTestNames();
                 items.Clear();
                 listbox_testlist.ClearSelected();
                 readTests();
@@ -79,7 +109,8 @@ namespace SampleNote.Main.Forms
             private void readTests()
             {
                 listbox_testlist.Items.Clear();
-                listbox_testlist.Items.AddRange(System.IO.File.ReadAllLines(testsFile));
+                //listbox_testlist.Items.AddRange(System.IO.File.ReadAllLines(testsFile));
+                listbox_testlist.Items.AddRange(TestNames.ToArray());
                 reselect();
             }
 
@@ -132,13 +163,18 @@ namespace SampleNote.Main.Forms
                     }
                 }
 
+                label_testList.Text = "";
+                foreach (string selection in listbox_testlist.SelectedItems)
+                {
+                    label_testList.Text += string.Format("- {0}{1}", selection, Environment.NewLine);
+                }
                 label_itemcount.Text = string.Format("{0} Selected", items.Count.ToString());
             }
             
             private void filterString(string filterText)
             {
                 List<string> filteredStrings = new List<string>();
-                foreach (string line in File.ReadAllLines(testsFile))
+                foreach (string line in TestNames)//File.ReadAllLines(testsFile))
                 {
                     if (line.Contains(filterText))
                     {
@@ -263,9 +299,17 @@ namespace SampleNote.Main.Forms
             {
                 Console.WriteLine("Log Creation");
                 this.button_samplenumber.Text = newSample[1];
-                this.userControl.create_log(int.Parse(newSample[0]));
-            }
+                // Check to see if the client wants to print a label
+                if (CHECKBOX_PrintLabel.Checked)
+                {
+                    this.userControl.create_log(int.Parse(newSample[0]), print_dymo_label:true);
+                }
+                else
+                {
+                    this.userControl.create_log(int.Parse(newSample[0]));
+                }
                 
+            }
         }
 
         private void clear_fields()
@@ -318,6 +362,8 @@ namespace SampleNote.Main.Forms
         {
             if (checkbox_datenow.Checked)
             {
+                dtp_date.Value = DateTime.UtcNow;
+                dtp_time.Value = DateTime.UtcNow;
                 dtp_date.Enabled = false;
                 dtp_time.Enabled = false;
             }
@@ -356,7 +402,7 @@ namespace SampleNote.Main.Forms
             }
             this.Hide();
         }
-        
+        // Read a test log and put it into the textboxes.
         private void display_logdata(int log_index)
         {
             Dictionary<string, string[]> log_data = remoteAPI.fetch_log(log_index, is_lognum:true);
@@ -369,13 +415,31 @@ namespace SampleNote.Main.Forms
 
                 }
                 // Collect controls in panel
-                if (control is Panel)
+                else if (control is Panel)
                 {
                     foreach (Control subcontrol in control.Controls)
                     {
                         if (subcontrol is TextBox && subcontrol.Tag != null)
                         {
                             (subcontrol as TextBox).Text = log_data[column_data[subcontrol.Tag.ToString()]][0];
+                        }
+                        else if (subcontrol is ListBox)
+                        {
+                            string[] tests_data = log_data["Tests Required"];
+                            ListBox lb = subcontrol as ListBox;
+
+                            // Clear the test log
+                            testlist.reset();
+                            lb.ClearSelected();
+                            foreach (string test in tests_data)
+                            {
+                                // Make sure it is not null
+                                if (String.IsNullOrEmpty(test) == false && lb.Items.Contains(test.Substring(1)))
+                                {
+                                    lb.SelectedItems.Add(test.Substring(1));
+                                }
+
+                            }
                         }
                     }
                 }
@@ -472,9 +536,16 @@ namespace SampleNote.Main.Forms
             {
                 return;
             }
+
+            Modals.SQLReader sql_editor = new Modals.SQLReader();
+            sql_editor.Show();
+            sql_editor.FormClosed += onEditorClosed;
+
+            /*
             text_editor = new Modals.Text_Editor(@"./config/test_list.dat");
             text_editor.Show();
             text_editor.FormClosed += onEditorClosed;
+            */
         }
 
         private void label_testlist_MouseEnter(object sender, EventArgs e)
@@ -485,6 +556,36 @@ namespace SampleNote.Main.Forms
         private void label_testlist_MouseLeave(object sender, EventArgs e)
         {
             (sender as Label).Text = "Test List";
+        }
+
+        private void CHECKBOX_PrintLabel_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!CHECKBOX_PrintLabel.Checked)
+            {
+                foreach (Control control in LABEL_labelView.Controls)
+                {
+                    control.ForeColor = Color.FromArgb(150, 150, 150);
+                }
+            }
+            else
+            {
+                foreach (Control control in LABEL_labelView.Controls)
+                {
+                    control.ForeColor = Color.Black;
+                }
+            }
+        }
+
+        private void btnPreviewAdmit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Modals.Admittance_Info adInfo = new Modals.Admittance_Info(listbox_testlist.SelectedItems);
+            adInfo.ShowDialog();
+            adInfo.FormClosed += (s, _) =>
+            {
+                this.Show();
+                adInfo.Dispose();
+            };
         }
     }
 }

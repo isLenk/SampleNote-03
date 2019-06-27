@@ -51,7 +51,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.A = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.B = new System.Windows.Forms.Label();
             this.C = new System.Windows.Forms.Label();
             this.E = new System.Windows.Forms.Label();
             this.F = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@
             this.M = new System.Windows.Forms.Label();
             this.panel_columns = new System.Windows.Forms.Panel();
             this.panel_usercontrol = new System.Windows.Forms.Panel();
+            this.button_showhistory = new System.Windows.Forms.Button();
             this.button_safeExit = new System.Windows.Forms.Button();
             this.panel_menuborder = new System.Windows.Forms.Panel();
             this.button_customization = new System.Windows.Forms.Button();
@@ -75,7 +76,6 @@
             this.label_menu = new System.Windows.Forms.Label();
             this.DataExpansionTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.Dialog_BakFile = new System.Windows.Forms.SaveFileDialog();
-            this.button_showhistory = new System.Windows.Forms.Button();
             this.Form_Header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BORDER)).BeginInit();
             this.panel_menubutton.SuspendLayout();
@@ -365,20 +365,20 @@
             this.A.Tag = "Sample Number";
             this.A.Text = "Sample #";
             // 
-            // label2
+            // B
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.B.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(104, 17);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Tag = "Project Number";
-            this.label2.Text = "Project #";
+            this.B.AutoSize = true;
+            this.B.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.B.ForeColor = System.Drawing.Color.White;
+            this.B.Location = new System.Drawing.Point(104, 17);
+            this.B.Margin = new System.Windows.Forms.Padding(0);
+            this.B.Name = "B";
+            this.B.Size = new System.Drawing.Size(69, 16);
+            this.B.TabIndex = 2;
+            this.B.Tag = "Project Number";
+            this.B.Text = "Project #";
             // 
             // C
             // 
@@ -464,7 +464,7 @@
             this.panel_columns.Controls.Add(this.F);
             this.panel_columns.Controls.Add(this.E);
             this.panel_columns.Controls.Add(this.C);
-            this.panel_columns.Controls.Add(this.label2);
+            this.panel_columns.Controls.Add(this.B);
             this.panel_columns.Controls.Add(this.A);
             this.panel_columns.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_columns.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -490,8 +490,25 @@
             this.panel_usercontrol.ForeColor = System.Drawing.Color.White;
             this.panel_usercontrol.Location = new System.Drawing.Point(0, 84);
             this.panel_usercontrol.Name = "panel_usercontrol";
-            this.panel_usercontrol.Size = new System.Drawing.Size(308, 513);
+            this.panel_usercontrol.Size = new System.Drawing.Size(3, 513);
             this.panel_usercontrol.TabIndex = 5;
+            // 
+            // button_showhistory
+            // 
+            this.button_showhistory.BackColor = System.Drawing.Color.White;
+            this.button_showhistory.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button_showhistory.FlatAppearance.BorderSize = 0;
+            this.button_showhistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.button_showhistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_showhistory.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold);
+            this.button_showhistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(67)))), ((int)(((byte)(141)))));
+            this.button_showhistory.Location = new System.Drawing.Point(21, 407);
+            this.button_showhistory.Name = "button_showhistory";
+            this.button_showhistory.Size = new System.Drawing.Size(80, 34);
+            this.button_showhistory.TabIndex = 10;
+            this.button_showhistory.Text = "History";
+            this.button_showhistory.UseVisualStyleBackColor = false;
+            this.button_showhistory.Click += new System.EventHandler(this.button_showhistory_Click);
             // 
             // button_safeExit
             // 
@@ -503,7 +520,7 @@
             this.button_safeExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_safeExit.Location = new System.Drawing.Point(0, 477);
             this.button_safeExit.Name = "button_safeExit";
-            this.button_safeExit.Size = new System.Drawing.Size(305, 36);
+            this.button_safeExit.Size = new System.Drawing.Size(0, 36);
             this.button_safeExit.TabIndex = 9;
             this.button_safeExit.Text = "Safe Exit App";
             this.button_safeExit.UseVisualStyleBackColor = true;
@@ -512,7 +529,7 @@
             // 
             this.panel_menuborder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(78)))), ((int)(((byte)(151)))));
             this.panel_menuborder.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_menuborder.Location = new System.Drawing.Point(305, 3);
+            this.panel_menuborder.Location = new System.Drawing.Point(0, 3);
             this.panel_menuborder.Name = "panel_menuborder";
             this.panel_menuborder.Size = new System.Drawing.Size(3, 510);
             this.panel_menuborder.TabIndex = 8;
@@ -520,6 +537,7 @@
             // button_customization
             // 
             this.button_customization.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(118)))), ((int)(((byte)(191)))));
+            this.button_customization.Enabled = false;
             this.button_customization.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(118)))), ((int)(((byte)(191)))));
             this.button_customization.FlatAppearance.BorderSize = 0;
             this.button_customization.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(98)))), ((int)(((byte)(171)))));
@@ -553,7 +571,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_formlhelp.BackColor = System.Drawing.Color.White;
             this.button_formlhelp.FlatAppearance.BorderSize = 0;
-            this.button_formlhelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.button_formlhelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.button_formlhelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_formlhelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(67)))), ((int)(((byte)(141)))));
             this.button_formlhelp.Location = new System.Drawing.Point(9, 62);
@@ -600,7 +618,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_quickbackup.BackColor = System.Drawing.Color.White;
             this.button_quickbackup.FlatAppearance.BorderSize = 0;
-            this.button_quickbackup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.button_quickbackup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.button_quickbackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_quickbackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(67)))), ((int)(((byte)(141)))));
             this.button_quickbackup.Location = new System.Drawing.Point(9, 62);
@@ -649,7 +667,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openmonitor.BackColor = System.Drawing.Color.White;
             this.button_openmonitor.FlatAppearance.BorderSize = 0;
-            this.button_openmonitor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.button_openmonitor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.button_openmonitor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_openmonitor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(67)))), ((int)(((byte)(141)))));
             this.button_openmonitor.Location = new System.Drawing.Point(9, 60);
@@ -684,7 +702,7 @@
             this.panel_usercontrolHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_usercontrolHeader.Location = new System.Drawing.Point(0, 0);
             this.panel_usercontrolHeader.Name = "panel_usercontrolHeader";
-            this.panel_usercontrolHeader.Size = new System.Drawing.Size(308, 3);
+            this.panel_usercontrolHeader.Size = new System.Drawing.Size(3, 3);
             this.panel_usercontrolHeader.TabIndex = 2;
             // 
             // label_menu
@@ -706,23 +724,6 @@
             // Dialog_BakFile
             // 
             this.Dialog_BakFile.Title = "Save Backup File To";
-            // 
-            // button_showhistory
-            // 
-            this.button_showhistory.BackColor = System.Drawing.Color.White;
-            this.button_showhistory.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button_showhistory.FlatAppearance.BorderSize = 0;
-            this.button_showhistory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.button_showhistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_showhistory.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold);
-            this.button_showhistory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(67)))), ((int)(((byte)(141)))));
-            this.button_showhistory.Location = new System.Drawing.Point(21, 407);
-            this.button_showhistory.Name = "button_showhistory";
-            this.button_showhistory.Size = new System.Drawing.Size(80, 34);
-            this.button_showhistory.TabIndex = 10;
-            this.button_showhistory.Text = "History";
-            this.button_showhistory.UseVisualStyleBackColor = false;
-            this.button_showhistory.Click += new System.EventHandler(this.button_showhistory_Click);
             // 
             // User_Control
             // 
@@ -767,7 +768,7 @@
         private System.Windows.Forms.Label FormName;
         private System.Windows.Forms.FlowLayoutPanel panel_contents;
         private System.Windows.Forms.Label A;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label B;
         private System.Windows.Forms.Label C;
         private System.Windows.Forms.Label E;
         private System.Windows.Forms.Label F;

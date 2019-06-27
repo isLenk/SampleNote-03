@@ -98,7 +98,7 @@ namespace SampleNote.Main.Modals
 
             if (checkbox_backup.Checked)
             {
-                string bakpack_path = String.Format("{0}/bakpack/list.tests/", Environment.CurrentDirectory);
+                string bakpack_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"/bakpack/list.tests/");
                 string file_name = Path.GetFileName(file_path);
                 int fileCountInBakpack = Directory.GetFiles(bakpack_path).Length;
                 // Save the backup

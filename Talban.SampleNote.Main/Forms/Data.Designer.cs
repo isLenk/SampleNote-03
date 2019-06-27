@@ -66,8 +66,6 @@
             this.textbox_sampledescription = new System.Windows.Forms.TextBox();
             this.label_sampledescription = new System.Windows.Forms.Label();
             this.panel_admitdata = new System.Windows.Forms.Panel();
-            this.textbox_admittancenumber = new System.Windows.Forms.TextBox();
-            this.label_admittancenumber = new System.Windows.Forms.Label();
             this.textbox_admittedby = new System.Windows.Forms.TextBox();
             this.label_admittedby = new System.Windows.Forms.Label();
             this.label_samplenumberheader = new System.Windows.Forms.Label();
@@ -85,6 +83,7 @@
             this.button_samplenumber = new System.Windows.Forms.Button();
             this.BUTTON_CoolGuy = new System.Windows.Forms.PictureBox();
             this.picture_clifton = new System.Windows.Forms.PictureBox();
+            this.btnPreviewAdmit = new System.Windows.Forms.Button();
             this.Form_Header.SuspendLayout();
             this.panel_projectdata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lock_fields)).BeginInit();
@@ -542,8 +541,7 @@
             // panel_admitdata
             // 
             this.panel_admitdata.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(98)))), ((int)(((byte)(171)))));
-            this.panel_admitdata.Controls.Add(this.textbox_admittancenumber);
-            this.panel_admitdata.Controls.Add(this.label_admittancenumber);
+            this.panel_admitdata.Controls.Add(this.btnPreviewAdmit);
             this.panel_admitdata.Controls.Add(this.textbox_admittedby);
             this.panel_admitdata.Controls.Add(this.label_admittedby);
             this.panel_admitdata.Location = new System.Drawing.Point(13, 602);
@@ -551,29 +549,6 @@
             this.panel_admitdata.Name = "panel_admitdata";
             this.panel_admitdata.Size = new System.Drawing.Size(339, 88);
             this.panel_admitdata.TabIndex = 13;
-            // 
-            // textbox_admittancenumber
-            // 
-            this.textbox_admittancenumber.BackColor = System.Drawing.Color.White;
-            this.textbox_admittancenumber.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textbox_admittancenumber.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textbox_admittancenumber.Location = new System.Drawing.Point(186, 49);
-            this.textbox_admittancenumber.Name = "textbox_admittancenumber";
-            this.textbox_admittancenumber.Size = new System.Drawing.Size(140, 26);
-            this.textbox_admittancenumber.TabIndex = 9;
-            this.textbox_admittancenumber.Tag = "L";
-            // 
-            // label_admittancenumber
-            // 
-            this.label_admittancenumber.AutoSize = true;
-            this.label_admittancenumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_admittancenumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.label_admittancenumber.Location = new System.Drawing.Point(5, 54);
-            this.label_admittancenumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_admittancenumber.Name = "label_admittancenumber";
-            this.label_admittancenumber.Size = new System.Drawing.Size(151, 21);
-            this.label_admittancenumber.TabIndex = 8;
-            this.label_admittancenumber.Text = "Admittance Number";
             // 
             // textbox_admittedby
             // 
@@ -708,6 +683,8 @@
             // CHECKBOX_PrintLabel
             // 
             this.CHECKBOX_PrintLabel.AutoSize = true;
+            this.CHECKBOX_PrintLabel.Checked = true;
+            this.CHECKBOX_PrintLabel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECKBOX_PrintLabel.Font = new System.Drawing.Font("Segoe UI", 11.5F);
             this.CHECKBOX_PrintLabel.Location = new System.Drawing.Point(769, 642);
             this.CHECKBOX_PrintLabel.Name = "CHECKBOX_PrintLabel";
@@ -715,6 +692,7 @@
             this.CHECKBOX_PrintLabel.TabIndex = 33;
             this.CHECKBOX_PrintLabel.Text = "Print Label";
             this.CHECKBOX_PrintLabel.UseVisualStyleBackColor = true;
+            this.CHECKBOX_PrintLabel.CheckedChanged += new System.EventHandler(this.CHECKBOX_PrintLabel_CheckedChanged);
             // 
             // button_submit
             // 
@@ -766,6 +744,20 @@
             this.picture_clifton.Size = new System.Drawing.Size(235, 235);
             this.picture_clifton.TabIndex = 37;
             this.picture_clifton.TabStop = false;
+            // 
+            // btnPreviewAdmit
+            // 
+            this.btnPreviewAdmit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(58)))), ((int)(((byte)(131)))));
+            this.btnPreviewAdmit.FlatAppearance.BorderSize = 0;
+            this.btnPreviewAdmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPreviewAdmit.ForeColor = System.Drawing.Color.White;
+            this.btnPreviewAdmit.Location = new System.Drawing.Point(6, 52);
+            this.btnPreviewAdmit.Name = "btnPreviewAdmit";
+            this.btnPreviewAdmit.Size = new System.Drawing.Size(320, 28);
+            this.btnPreviewAdmit.TabIndex = 9;
+            this.btnPreviewAdmit.Text = "Preview Admittance Form";
+            this.btnPreviewAdmit.UseVisualStyleBackColor = false;
+            this.btnPreviewAdmit.Click += new System.EventHandler(this.btnPreviewAdmit_Click);
             // 
             // Data
             // 
@@ -851,8 +843,6 @@
         private System.Windows.Forms.TextBox textbox_sampledescription;
         private System.Windows.Forms.Label label_sampledescription;
         private System.Windows.Forms.Panel panel_admitdata;
-        private System.Windows.Forms.TextBox textbox_admittancenumber;
-        private System.Windows.Forms.Label label_admittancenumber;
         private System.Windows.Forms.TextBox textbox_admittedby;
         private System.Windows.Forms.Label label_admittedby;
         private System.Windows.Forms.Label label_samplenumberheader;
@@ -874,5 +864,6 @@
         private System.Windows.Forms.PictureBox lock_fields1;
         private System.Windows.Forms.PictureBox picture_clifton;
         private System.Windows.Forms.Button button_samplenumber;
+        private System.Windows.Forms.Button btnPreviewAdmit;
     }
 }

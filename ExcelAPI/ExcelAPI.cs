@@ -378,7 +378,6 @@ namespace SampleNote.Main.Modules
                 }
                 else
                 {
-                    Console.WriteLine("PAAPAPA");
                     // Test that is not the current one
                     if (cell_data.Value.ToString() != test_name &&
                         get_cellStat_fromColor(cell_color) != 3)

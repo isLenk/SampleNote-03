@@ -30,6 +30,7 @@ namespace SampleNote.Main.Forms
         public Launcher()
         {
             InitializeComponent();
+
             new Utility.HeaderUtility(Form_Header);
             new Utility.TooltipUtility(ToolTip);
  
@@ -58,7 +59,7 @@ namespace SampleNote.Main.Forms
                             case "module":
                                 string module_value = subReader.ReadElementContentAsString();
                                 Console.WriteLine(String.Format("Fetching: {0}", module_value));
-                                if (File.Exists(Path.Combine(@"./Lib/", module_value)))
+                                if (File.Exists(Path.Combine(Environment.CurrentDirectory, @"Lib/", module_value)))
                                 {
                                     Console.WriteLine("DLL Module Exists");
                                     // Insert new element to List
@@ -429,7 +430,17 @@ namespace SampleNote.Main.Forms
             Application.Exit();
         }
 
-        
+        private void btnPrintPreview_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Modals.Admittance_Info adInfo = new Modals.Admittance_Info();
+            adInfo.ShowDialog();
+            adInfo.FormClosed += (s, _) =>
+            {
+                this.Show();
+                adInfo.Dispose();
+            };
+        }
     }
     
 }

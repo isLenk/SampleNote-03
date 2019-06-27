@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SampleNote")]
 [assembly: AssemblyDescription("A custom made sample logging system")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Talban")]
+[assembly: AssemblyCompany("Lance Talban")]
 [assembly: AssemblyProduct("SampleNote")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

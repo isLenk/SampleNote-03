@@ -16,6 +16,8 @@ namespace SampleNote.Main.Forms
     {
         // List variables
         Dictionary<string, int> columnPositions = new Dictionary<string, int>();
+        Utility.ConfigUtility config_columns = new Utility.ConfigUtility(@"./config/column.positions.config");
+         Utility.CacheUtility cache = new Utility.CacheUtility();
         // Construct the individual form classes and API
         Forms.SampleLog_FormEditor editor;
         Forms.Data form_data;
@@ -33,17 +35,27 @@ namespace SampleNote.Main.Forms
             panel_usercontrol.Width = 3;
             this.form_data = new Forms.Data(remoteAPI, this);
             this.remoteAPI = remoteAPI;
-            new Utility.HeaderUtility(Form_Header, sizable:true, canHideHeader:true);
+            new Utility.HeaderUtility(Form_Header, sizable: true, canHideHeader: true);
             Dialog_BakFile.Filter = remoteAPI.fetch_extensions();
+
+
+            // Log column positions
             foreach (Control columnObject in panel_columns.Controls)
             {
-                if (columnObject is Label && !string.IsNullOrEmpty(columnObject.Tag.ToString()) )
+                if (columnObject is Label && !string.IsNullOrEmpty(columnObject.Tag.ToString()))
                 {
-                    columnPositions.Add(columnObject.Tag.ToString(), columnObject.Location.X);
+                    // Add from the config file
+                    columnPositions.Add(columnObject.Tag.ToString(), Int32.Parse(config_columns[
+                        columnObject.Tag.ToString()]));
+                    columnObject.Location = new Point(columnPositions[columnObject.Tag.ToString()],
+                        columnObject.Location.Y);
+                    //columnPositions.Add(columnObject.Tag.ToString(), columnObject.Location.X);
                 }
             }
+
             editor = new Forms.SampleLog_FormEditor(panel_contents, remoteAPI, columnPositions, DataExpansionTooltip);
-            monitor = new Forms.Monitor(remoteAPI, columnPositions);
+            monitor = new Forms.Monitor(remoteAPI, editor);
+            
             this.Show();
             // Apply location movements on the columns
             foreach (Control control_column in panel_columns.Controls)
@@ -53,7 +65,12 @@ namespace SampleNote.Main.Forms
                     control_column.MouseEnter += (s, _) => { control_column.ForeColor = Color.FromArgb(200, 200, 200); };
                     control_column.MouseLeave += (s, _) => { control_column.ForeColor = Color.White; };
                     control_column.MouseDown += (sender, _) => { column_dragging = sender as Label; column_offsetFromLeft = (Cursor.Position.X - this.Left) - (sender as Label).Left; };
-                    control_column.MouseUp += (s, _) => { adjustColumns(); column_dragging = null; };
+                    control_column.MouseUp += (s, _) =>
+                    {
+                        adjustColumns();
+                        column_dragging = null;
+                        config_columns[control_column.Tag.ToString()] = control_column.Location.X.ToString();
+                    };
                     control_column.MouseMove += dragColumn;
                 }
             }
@@ -61,17 +78,57 @@ namespace SampleNote.Main.Forms
 
         private void adjustColumns()
         {
+            // Set the new column position variable
             columnPositions[column_dragging.Tag.ToString()] = column_dragging.Location.X;
+            // Find the next columns left position
+            int nextColumnLeft = 0;
+            Control prevColumn = null;
+            foreach (Control control in panel_columns.Controls)
+            {
+                if (control.TabIndex - column_dragging.TabIndex == 1)
+                {
+                    nextColumnLeft = control.Left;
+                }
+                // Resize the controls to the left
+                if (control.TabIndex - column_dragging.TabIndex == -1)
+                {
+                    prevColumn = control;
+                }
+            }
+
             foreach (Control control in panel_contents.Controls)
             {
                 if (control is Panel)
                 {
                     foreach (Control subControl in control.Controls)
                     {
+                        // Left
+                        if (subControl.Tag == prevColumn.Tag)
+                        {
+                            subControl.Width = column_dragging.Left - prevColumn.Left - 5;
+                            
+                            //subControl.BackColor = Color.Firebrick;
+                        }
+                        // Now
                         if (subControl.Tag == column_dragging.Tag)
                         {
-                            subControl.Location = new Point(column_dragging.Location.X, subControl.Location.Y);
+                            if (subControl.Tag.ToString() == "Tests Required")
+                            {
+                                subControl.Location = new Point(column_dragging.Location.X, subControl.Location.Y);
+                                subControl.Width = this.Width - nextColumnLeft - column_dragging.Left;
+                            }
+                            else
+                            {
+                                subControl.Location = new Point(column_dragging.Location.X, subControl.Location.Y);
+                                if (nextColumnLeft != 0)
+                                {
+                                    //subControl.BackColor = Color.BlueViolet;
+                                    subControl.Width = nextColumnLeft - column_dragging.Left - 5;
+                                }
+                            }
+                            
                         }
+                       
                     }
                 }
             }
@@ -79,49 +136,53 @@ namespace SampleNote.Main.Forms
 
         private void dragColumn(object sender, EventArgs e)
         {
-            Label column = sender as Label;
+            Label myColumn = sender as Label;
 
-            if (column != column_dragging)
+            if (myColumn != column_dragging)
             {
                 return;
             }
 
+            Point cursor_relativePoint = this.PointToClient(Cursor.Position);
+            int newX = cursor_relativePoint.X - column_offsetFromLeft;
             // Check for labels in contact
-            foreach (Control _column in panel_columns.Controls)
+            foreach (Control otherColumn in panel_columns.Controls)
             {
                 // Make sure the column is not the same as the current column
-                if (_column != column)
+                if (otherColumn != myColumn)
                 {
-                    // Check left side contact
-                    if (_column.Right > column.Left && (column.TabIndex - _column.TabIndex) == 1)
+                    // Check if it is passing any unallowed areas
+                    if (otherColumn.TabIndex - myColumn.TabIndex == -1) // Other Column is on left side
                     {
-                        column.Location = new Point(_column.Right, column.Location.Y);
-                        return;
+                        if (newX < otherColumn.Right) // myColumn.Left
+                        {
+                            newX = otherColumn.Right + 2;
+                            break;
+                        }
                     }
-                    // Check right side contact
-                    else if (_column.Left < column.Right && (column.TabIndex - _column.TabIndex) == -1)
+
+                    if (otherColumn.TabIndex - myColumn.TabIndex == 1) // Other Column is on right side
                     {
-                        column.Location = new Point(_column.Left - column.Width, column.Location.Y);
-                        return;
+                        if (newX + myColumn.Width > otherColumn.Left)
+                        {
+                            newX = otherColumn.Left - myColumn.Width - 2;
+                            break;
+                        }
                     }
-                    else if (column.TabIndex - _column.TabIndex == 1)
-                    {
-                        // Adjust the location of the column label with its proper offsets
-                        column.Location = new Point(Cursor.Position.X - column_offsetFromLeft - this.Left, column.Location.Y);
-                        adjustColumns();
-                        return;
-                    }
-                    
                 }
             }
 
+            myColumn.Location = new Point(newX, myColumn.Location.Y);
+            adjustColumns();
+            
         }
+
         bool menu_state = false;
 
         // Creates a panel log holding the data contained from the index
-        public void create_log(int index)
+        public void create_log(int index, bool print_dymo_label=false)
         {
-            editor.createLog(index);
+            editor.createLog(index, print_dymo_label);
         }
         // Adjusts the menu panels width
         private void adjustPanelWidth()
@@ -252,9 +313,10 @@ namespace SampleNote.Main.Forms
         {
             if (history_reader != null)
             {
-                return;
+                history_reader.Close();
+                history_reader.Dispose();
+                history_reader = null;
             }
-
             history_reader = new Modals.History_Reader();
         }
     }
