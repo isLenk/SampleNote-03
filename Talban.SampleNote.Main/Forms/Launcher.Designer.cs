@@ -210,13 +210,14 @@
             this.listbox_changes.FormattingEnabled = true;
             this.listbox_changes.ItemHeight = 22;
             this.listbox_changes.Items.AddRange(new object[] {
-            "UI Redesign",
-            "API Remote",
-            "Rewrote Excel API",
-            "Custom Text Editor",
-            "Created Recent Files List",
-            "Various Tweaks to UI",
-            "Column Repositioning Added"});
+            "Test List Nickname Edit",
+            "History Log displays proper Log Number",
+            "Fixed Sample Log Counter",
+            "Scrolling Text",
+            "Fixed Filter Selection Bug",
+            "Reprintable Labels (Left click sample num)",
+            "Removable Logs (Right click sample num)",
+            "Admit Form extends rows"});
             this.listbox_changes.Location = new System.Drawing.Point(31, 177);
             this.listbox_changes.Name = "listbox_changes";
             this.listbox_changes.SelectionMode = System.Windows.Forms.SelectionMode.None;
@@ -246,6 +247,7 @@
             this.dropdown_selectedApi.Name = "dropdown_selectedApi";
             this.dropdown_selectedApi.Size = new System.Drawing.Size(213, 30);
             this.dropdown_selectedApi.TabIndex = 4;
+            this.dropdown_selectedApi.SelectedIndexChanged += new System.EventHandler(this.dropdown_selectedApi_SelectedIndexChanged);
             // 
             // label_changes
             // 
@@ -273,10 +275,9 @@
             this.label_descriptiondata.ForeColor = System.Drawing.Color.White;
             this.label_descriptiondata.Location = new System.Drawing.Point(25, 55);
             this.label_descriptiondata.Name = "label_descriptiondata";
-            this.label_descriptiondata.Size = new System.Drawing.Size(394, 66);
+            this.label_descriptiondata.Size = new System.Drawing.Size(406, 44);
             this.label_descriptiondata.TabIndex = 0;
-            this.label_descriptiondata.Text = "I didn\'t want to relearn how I wrote this project\r\nso I rewrote it again. Everyth" +
-    "ing should be somewhat\r\nsimilar";
+            this.label_descriptiondata.Text = "I didn\'t fully bug test everything but I added everything\r\nrequested";
             // 
             // picture_clifton
             // 
@@ -577,7 +578,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Launcher";
-            this.Text = "Form1";
+            this.Text = " ";
             this.TopMost = true;
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Launcher_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Launcher_DragEnter);

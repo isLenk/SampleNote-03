@@ -1,47 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 
 namespace SampleNote.Main.Utility
 {
     class CacheUtility
     {
         // FUTURE USE PROJECT
-        string cache_folder = "./cache/";
+        string cacheDirectory = "./cache/";
 
-        public CacheUtility(string cache_folder= "./cache/")
+        public CacheUtility(string cacheDirectory = "./cache/")
         {
             // Check if the cache folder exists, if not, make one.
-            if (!File.Exists(cache_folder))
+            if (!File.Exists(cacheDirectory))
             {
-                Directory.CreateDirectory(cache_folder);
+                Directory.CreateDirectory(cacheDirectory);
             }
         }
         
-        public string[] GetCacheData(string cache_filename)
+        public string[] GetCacheData(string cacheFileName)
         {
             // If the file does not yet exists. Return an empty string
-            if (!File.Exists(Path.Combine(cache_folder, cache_filename))) 
+            if (!File.Exists(Path.Combine(cacheDirectory, cacheFileName))) 
             {
                 return new string[] { };
             }
-            return File.ReadAllLines(Path.Combine(cache_folder, cache_filename));
+            return File.ReadAllLines(Path.Combine(cacheDirectory, cacheFileName));
         }
 
         // Save the stored data into the cache folder
-        public void StoreCache(string cache_file, string[] cache_data)
+        public void StoreCache(string cacheFile, string[] cacheData)
         {
-            string file_path = Path.Combine(cache_folder, cache_file);
+            string filePath = Path.Combine(cacheDirectory, cacheFile);
             // Check if the cache file exists
-            if (!File.Exists(file_path))
+            if (!File.Exists(filePath))
             {
-                File.Create(file_path);
+                File.Create(filePath);
             }
 
-            File.WriteAllLines(file_path, cache_data);
+            File.WriteAllLines(filePath, cacheData);
         }
     }
 }

@@ -76,6 +76,7 @@
             this.label_menu = new System.Windows.Forms.Label();
             this.DataExpansionTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.Dialog_BakFile = new System.Windows.Forms.SaveFileDialog();
+            this.H = new System.Windows.Forms.Label();
             this.Form_Header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BORDER)).BeginInit();
             this.panel_menubutton.SuspendLayout();
@@ -117,7 +118,7 @@
             this.button_opendataform.Name = "button_opendataform";
             this.button_opendataform.Size = new System.Drawing.Size(175, 39);
             this.button_opendataform.TabIndex = 5;
-            this.button_opendataform.Text = "+ WRITE SAMPLE";
+            this.button_opendataform.Text = "+ ADMIT SAMPLE";
             this.button_opendataform.UseVisualStyleBackColor = false;
             this.button_opendataform.Click += new System.EventHandler(this.button_opendataform_Click);
             // 
@@ -175,6 +176,7 @@
             // 
             // FormName
             // 
+            this.FormName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(138)))), ((int)(((byte)(201)))));
             this.FormName.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormName.ForeColor = System.Drawing.Color.White;
             this.FormName.Location = new System.Drawing.Point(-1, 0);
@@ -182,7 +184,7 @@
             this.FormName.Name = "FormName";
             this.FormName.Size = new System.Drawing.Size(227, 39);
             this.FormName.TabIndex = 0;
-            this.FormName.Text = " SampleNote User Control";
+            this.FormName.Text = "MENU";
             this.FormName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FormName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormName_MouseDown);
             this.FormName.MouseEnter += new System.EventHandler(this.FormName_MouseEnter);
@@ -447,11 +449,11 @@
             this.M.AutoSize = true;
             this.M.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.M.ForeColor = System.Drawing.Color.White;
-            this.M.Location = new System.Drawing.Point(917, 17);
+            this.M.Location = new System.Drawing.Point(1027, 17);
             this.M.Margin = new System.Windows.Forms.Padding(0);
             this.M.Name = "M";
             this.M.Size = new System.Drawing.Size(125, 16);
-            this.M.TabIndex = 7;
+            this.M.TabIndex = 8;
             this.M.Tag = "Tests Required";
             this.M.Text = "Test(s) Required";
             // 
@@ -459,6 +461,7 @@
             // 
             this.panel_columns.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel_columns.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(43)))));
+            this.panel_columns.Controls.Add(this.H);
             this.panel_columns.Controls.Add(this.M);
             this.panel_columns.Controls.Add(this.G);
             this.panel_columns.Controls.Add(this.F);
@@ -556,6 +559,7 @@
             // 
             this.groupBox1.Controls.Add(this.button_formlhelp);
             this.groupBox1.Controls.Add(this.button_generalhelp);
+            this.groupBox1.Enabled = false;
             this.groupBox1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
             this.groupBox1.Location = new System.Drawing.Point(12, 291);
@@ -564,6 +568,7 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "HELP";
+            this.groupBox1.Visible = false;
             // 
             // button_formlhelp
             // 
@@ -725,6 +730,21 @@
             // 
             this.Dialog_BakFile.Title = "Save Backup File To";
             // 
+            // H
+            // 
+            this.H.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.H.AutoSize = true;
+            this.H.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.H.ForeColor = System.Drawing.Color.White;
+            this.H.Location = new System.Drawing.Point(869, 17);
+            this.H.Margin = new System.Windows.Forms.Padding(0);
+            this.H.Name = "H";
+            this.H.Size = new System.Drawing.Size(124, 16);
+            this.H.TabIndex = 7;
+            this.H.Tag = "Samp. Location";
+            this.H.Text = "Sample Location";
+            // 
             // User_Control
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
@@ -810,5 +830,6 @@
         private System.Windows.Forms.Button button_safeExit;
         private System.Windows.Forms.Panel panel_menuborder;
         private System.Windows.Forms.Button button_showhistory;
+        private System.Windows.Forms.Label H;
     }
 }

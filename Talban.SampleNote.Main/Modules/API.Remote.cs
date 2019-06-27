@@ -45,6 +45,15 @@ namespace SampleNote.Main.Modules
                 
                 this.chosenAPI = Activator.CreateInstance(apiType);
             }
+            else if (api_name == "SQLite API")
+            {
+                Console.WriteLine("Selected SQL API");
+
+                Assembly assemblyFile = Assembly.LoadFile(Environment.CurrentDirectory + @"/Lib/SQLiteAPI.dll");
+                apiType = assemblyFile.GetType("SampleNote.Main.Modules.SQLiteAPI");
+
+                this.chosenAPI = Activator.CreateInstance(apiType);
+            }
             
         }
             
@@ -56,6 +65,18 @@ namespace SampleNote.Main.Modules
             // doesn't need to called 'x' amount of times to go to that value.
             MethodInfo push_teststatus = apiType.GetMethod("push_teststatus");
             return push_teststatus.Invoke(chosenAPI, new object[] {log_index, test_name, overwrite_status});
+        }
+
+        public bool delete_log(int log_index)
+        {
+            MethodInfo deleteLog = apiType.GetMethod("delete_log");
+            return deleteLog.Invoke(chosenAPI, new object[] { log_index });
+        }
+
+        public bool compare_key(string key)
+        {
+            MethodInfo compareKey = apiType.GetMethod("compare_key");
+            return compareKey.Invoke(chosenAPI, new object[] { key });
         }
 
         public Dictionary<string, string> fetch_columndata(bool inverted=false)

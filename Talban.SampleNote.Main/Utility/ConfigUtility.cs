@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace SampleNote.Main.Utility
 {
-    class ConfigUtility
+    public class ConfigUtility
     {
         string path_configfile;
         public ConfigUtility(string path_configfile)

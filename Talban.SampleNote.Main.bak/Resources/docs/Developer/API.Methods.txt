@@ -1,0 +1,18 @@
+List Of method names that the custom built in API Remote will try to invoke
+ 
+ ">" = Parameters to send
+ "<" = Return data
+
+ push_teststatus()
+	> :	int		log_index
+		string	test_name
+		int		overwrite_status = -1
+
+	< : int		status ()
+
+ get_logcount()
+ fetch_log()
+ create_log()
+ access_file()
+ create_file()
+ quit()

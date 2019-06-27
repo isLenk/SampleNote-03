@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
 namespace SampleNote.Main.Modules
 {
-    class DYMO_LabelWriter
+    class DYMOLabelWriter
     {
         string printerName = "DYMO LabelWriter DUO Label";
 
+        public bool checkAvailable()
+        {
+            try
+            {
+                if (!DYMO.Label.Framework.Framework.GetLabelWriterPrinters().Contains(printerName))
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            
+            return true;
+        }
         public void PrintLabel(Dictionary<string, string[]> logData)
         {
 			// Check to see if the printer is connected to the device
@@ -22,7 +35,7 @@ namespace SampleNote.Main.Modules
                 return;
             }
 			// Load the template label for the print
-            var label = DYMO.Label.Framework.Label.Open(Path.Combine(Environment.CurrentDirectory, "/config/PrintTag.label"));
+            var label = DYMO.Label.Framework.Label.Open(Path.Combine(Environment.CurrentDirectory, "config/PrintTag.label"));
             // Append all the lists of tests into this string which will then be put into the last label
             string List_Of_Tests = "";
 			// Read the tests required and format it similar to "- Test
@@ -32,7 +45,7 @@ namespace SampleNote.Main.Modules
                 {
                     break;
                 }
-                List_Of_Tests += string.Format("- {0}\n", testName);
+                List_Of_Tests += string.Format("- {0}\n", testName.Substring(1));
             }
 
             label.SetObjectText("LABEL_SAMPLENUMBER", logData["Sample Number"][0]);

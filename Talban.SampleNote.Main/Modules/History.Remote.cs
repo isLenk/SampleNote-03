@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SampleNote.Main.Modules
 {
-    class History
+    public class History
     {
         string history_path = @"./background/test.log.dat"; //Path.Combine(Environment.CurrentDirectory, @"/background/test.log.dat");
 

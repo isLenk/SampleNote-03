@@ -66,6 +66,7 @@
             this.textbox_sampledescription = new System.Windows.Forms.TextBox();
             this.label_sampledescription = new System.Windows.Forms.Label();
             this.panel_admitdata = new System.Windows.Forms.Panel();
+            this.btnPreviewAdmit = new System.Windows.Forms.Button();
             this.textbox_admittedby = new System.Windows.Forms.TextBox();
             this.label_admittedby = new System.Windows.Forms.Label();
             this.label_samplenumberheader = new System.Windows.Forms.Label();
@@ -83,7 +84,8 @@
             this.button_samplenumber = new System.Windows.Forms.Button();
             this.BUTTON_CoolGuy = new System.Windows.Forms.PictureBox();
             this.picture_clifton = new System.Windows.Forms.PictureBox();
-            this.btnPreviewAdmit = new System.Windows.Forms.Button();
+            this.TestsListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.setNickname = new System.Windows.Forms.ToolStripMenuItem();
             this.Form_Header.SuspendLayout();
             this.panel_projectdata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lock_fields)).BeginInit();
@@ -95,6 +97,7 @@
             this.LABEL_labelView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BUTTON_CoolGuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture_clifton)).BeginInit();
+            this.TestsListContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // Form_Header
@@ -359,7 +362,7 @@
             this.listbox_testlist.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listbox_testlist.Size = new System.Drawing.Size(387, 550);
             this.listbox_testlist.TabIndex = 7;
-            this.listbox_testlist.Tag = "M";
+            this.listbox_testlist.Tag = "L";
             // 
             // panel3
             // 
@@ -549,6 +552,20 @@
             this.panel_admitdata.Name = "panel_admitdata";
             this.panel_admitdata.Size = new System.Drawing.Size(339, 88);
             this.panel_admitdata.TabIndex = 13;
+            // 
+            // btnPreviewAdmit
+            // 
+            this.btnPreviewAdmit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(58)))), ((int)(((byte)(131)))));
+            this.btnPreviewAdmit.FlatAppearance.BorderSize = 0;
+            this.btnPreviewAdmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPreviewAdmit.ForeColor = System.Drawing.Color.White;
+            this.btnPreviewAdmit.Location = new System.Drawing.Point(6, 52);
+            this.btnPreviewAdmit.Name = "btnPreviewAdmit";
+            this.btnPreviewAdmit.Size = new System.Drawing.Size(320, 28);
+            this.btnPreviewAdmit.TabIndex = 9;
+            this.btnPreviewAdmit.Text = "Preview Admittance Form";
+            this.btnPreviewAdmit.UseVisualStyleBackColor = false;
+            this.btnPreviewAdmit.Click += new System.EventHandler(this.btnPreviewAdmit_Click);
             // 
             // textbox_admittedby
             // 
@@ -745,19 +762,19 @@
             this.picture_clifton.TabIndex = 37;
             this.picture_clifton.TabStop = false;
             // 
-            // btnPreviewAdmit
+            // TestsListContextMenu
             // 
-            this.btnPreviewAdmit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(58)))), ((int)(((byte)(131)))));
-            this.btnPreviewAdmit.FlatAppearance.BorderSize = 0;
-            this.btnPreviewAdmit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPreviewAdmit.ForeColor = System.Drawing.Color.White;
-            this.btnPreviewAdmit.Location = new System.Drawing.Point(6, 52);
-            this.btnPreviewAdmit.Name = "btnPreviewAdmit";
-            this.btnPreviewAdmit.Size = new System.Drawing.Size(320, 28);
-            this.btnPreviewAdmit.TabIndex = 9;
-            this.btnPreviewAdmit.Text = "Preview Admittance Form";
-            this.btnPreviewAdmit.UseVisualStyleBackColor = false;
-            this.btnPreviewAdmit.Click += new System.EventHandler(this.btnPreviewAdmit_Click);
+            this.TestsListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setNickname});
+            this.TestsListContextMenu.Name = "TestsListContextMenu";
+            this.TestsListContextMenu.Size = new System.Drawing.Size(148, 26);
+            this.TestsListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.TestsListContextMenu_Opening);
+            // 
+            // setNickname
+            // 
+            this.setNickname.Name = "setNickname";
+            this.setNickname.Size = new System.Drawing.Size(147, 22);
+            this.setNickname.Text = "Set Nickname";
             // 
             // Data
             // 
@@ -804,6 +821,7 @@
             this.LABEL_labelView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BUTTON_CoolGuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture_clifton)).EndInit();
+            this.TestsListContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,5 +883,7 @@
         private System.Windows.Forms.PictureBox picture_clifton;
         private System.Windows.Forms.Button button_samplenumber;
         private System.Windows.Forms.Button btnPreviewAdmit;
+        private System.Windows.Forms.ContextMenuStrip TestsListContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem setNickname;
     }
 }

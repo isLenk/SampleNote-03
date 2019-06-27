@@ -19,7 +19,7 @@ namespace SampleNote.Main.Forms
         Utility.ConfigUtility config_columns = new Utility.ConfigUtility(@"./config/column.positions.config");
          Utility.CacheUtility cache = new Utility.CacheUtility();
         // Construct the individual form classes and API
-        Forms.SampleLog_FormEditor editor;
+        Designer.MainDriver editor;
         Forms.Data form_data;
         Forms.Monitor monitor;
         Modals.History_Reader history_reader;
@@ -27,8 +27,7 @@ namespace SampleNote.Main.Forms
         // Column Draggin Variables
         Label column_dragging = null;
         int column_offsetFromLeft = 0;
-
-
+        
         public User_Control(Modules.API remoteAPI)
         {
             InitializeComponent();
@@ -52,15 +51,14 @@ namespace SampleNote.Main.Forms
                     //columnPositions.Add(columnObject.Tag.ToString(), columnObject.Location.X);
                 }
             }
-
-            editor = new Forms.SampleLog_FormEditor(panel_contents, remoteAPI, columnPositions, DataExpansionTooltip);
+            editor = new Designer.MainDriver(panel_contents, remoteAPI, columnPositions, DataExpansionTooltip);
             monitor = new Forms.Monitor(remoteAPI, editor);
-            
+
             this.Show();
             // Apply location movements on the columns
             foreach (Control control_column in panel_columns.Controls)
             {
-                if (control_column is Label)
+                if (control_column is Label && control_column.TabIndex != 1)
                 {
                     control_column.MouseEnter += (s, _) => { control_column.ForeColor = Color.FromArgb(200, 200, 200); };
                     control_column.MouseLeave += (s, _) => { control_column.ForeColor = Color.White; };
@@ -68,6 +66,21 @@ namespace SampleNote.Main.Forms
                     control_column.MouseUp += (s, _) =>
                     {
                         adjustColumns();
+                        foreach (Control control in panel_contents.Controls)
+                        {
+                            if (control is Panel)
+                            {
+                                foreach (Control subControl in control.Controls)
+                                {
+                                    if (subControl is Label && subControl.Tag == column_dragging.Tag)
+                                    {
+                                        new Utility.TextScrollUtility().Add((Label)subControl);
+                                    }
+                                }
+                            }
+                            
+                        }
+
                         column_dragging = null;
                         config_columns[control_column.Tag.ToString()] = control_column.Location.X.ToString();
                     };
@@ -83,6 +96,7 @@ namespace SampleNote.Main.Forms
             // Find the next columns left position
             int nextColumnLeft = 0;
             Control prevColumn = null;
+
             foreach (Control control in panel_columns.Controls)
             {
                 if (control.TabIndex - column_dragging.TabIndex == 1)
@@ -102,11 +116,19 @@ namespace SampleNote.Main.Forms
                 {
                     foreach (Control subControl in control.Controls)
                     {
+                        if (string.IsNullOrEmpty(subControl.Tag.ToString()))
+                        {
+                            return;
+                        }
                         // Left
                         if (subControl.Tag == prevColumn.Tag)
                         {
                             subControl.Width = column_dragging.Left - prevColumn.Left - 5;
-                            
+                            if (subControl is Label)
+                            {
+
+                                new Utility.TextScrollUtility().Add((Label)subControl);
+                            }
                             //subControl.BackColor = Color.Firebrick;
                         }
                         // Now
@@ -138,7 +160,7 @@ namespace SampleNote.Main.Forms
         {
             Label myColumn = sender as Label;
 
-            if (myColumn != column_dragging)
+            if (myColumn != column_dragging || column_dragging.TabIndex == 1)
             {
                 return;
             }
@@ -182,7 +204,7 @@ namespace SampleNote.Main.Forms
         // Creates a panel log holding the data contained from the index
         public void create_log(int index, bool print_dymo_label=false)
         {
-            editor.createLog(index, print_dymo_label);
+            editor.CreateLog(index, print_dymo_label);
         }
         // Adjusts the menu panels width
         private void adjustPanelWidth()
@@ -250,10 +272,12 @@ namespace SampleNote.Main.Forms
         // Resize the user control / menu to indicate the user that there will be an adjustment to the sizing 
         private void FormName_MouseEnter(object sender, EventArgs e)
         {
+            panel_usercontrol.BackColor = Color.FromArgb(1, 108, 181);
             panel_usercontrol.Width = 7;
         }
         private void FormName_MouseLeave(object sender, EventArgs e)
         {
+            panel_usercontrol.BackColor = Color.FromArgb(1, 138, 201);
             adjustPanelWidth();
         }
         // Create a backup file wherever the user wants

@@ -59,22 +59,6 @@
 		<Bounds X="3747.50390625" Y="193.700790405273" Width="1605" Height="480" />
 	</ObjectInfo>
 	<ObjectInfo>
-		<ShapeObject>
-			<Name>SHAPE</Name>
-			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
-			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
-			<LinkedObjectName></LinkedObjectName>
-			<Rotation>Rotation0</Rotation>
-			<IsMirrored>False</IsMirrored>
-			<IsVariable>False</IsVariable>
-			<ShapeType>HorizontalLine</ShapeType>
-			<LineWidth>15</LineWidth>
-			<LineAlignment>Center</LineAlignment>
-			<FillColor Alpha="0" Red="255" Green="255" Blue="255" />
-		</ShapeObject>
-		<Bounds X="336" Y="997.086608886719" Width="4988.97645287967" Height="15" />
-	</ObjectInfo>
-	<ObjectInfo>
 		<TextObject>
 			<Name>LABEL_TESTLIST</Name>
 			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
@@ -103,7 +87,7 @@
 			<IsVariable>False</IsVariable>
 			<HorizontalAlignment>Left</HorizontalAlignment>
 			<VerticalAlignment>Top</VerticalAlignment>
-			<TextFitMode>ShrinkToFit</TextFitMode>
+			<TextFitMode>None</TextFitMode>
 			<UseFullFontHeight>True</UseFullFontHeight>
 			<Verticalized>False</Verticalized>
 			<StyledText>
@@ -169,5 +153,31 @@
 			</StyledText>
 		</TextObject>
 		<Bounds X="388.322845458984" Y="674.527587890625" Width="2328.18896484375" Height="251.338577270508" />
+	</ObjectInfo>
+	<ObjectInfo>
+		<TextObject>
+			<Name>TEXT</Name>
+			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
+			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
+			<LinkedObjectName></LinkedObjectName>
+			<Rotation>Rotation0</Rotation>
+			<IsMirrored>False</IsMirrored>
+			<IsVariable>False</IsVariable>
+			<HorizontalAlignment>Left</HorizontalAlignment>
+			<VerticalAlignment>Top</VerticalAlignment>
+			<TextFitMode>ShrinkToFit</TextFitMode>
+			<UseFullFontHeight>True</UseFullFontHeight>
+			<Verticalized>False</Verticalized>
+			<StyledText>
+				<Element>
+					<String>___________________________________________</String>
+					<Attributes>
+						<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />
+						<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
+					</Attributes>
+				</Element>
+			</StyledText>
+		</TextObject>
+		<Bounds X="416" Y="819.999999999999" Width="4934" Height="270.000000000001" />
 	</ObjectInfo>
 </DieCutLabel>

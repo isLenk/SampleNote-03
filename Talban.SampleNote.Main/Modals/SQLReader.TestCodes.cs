@@ -24,9 +24,14 @@ namespace SampleNote.Main.Modals
             {
                 DataGrid.Rows.Add(new string[] {
                     record_data[0],
+                    record_data[3],
                     record_data[1],
                     record_data[2]});
+
+                
             }
+
+            DataGrid.CellValueChanged += DataGrid_CellValueChanged;
 
             // Add Individual Categories to Category List
             List<string> ColumnData = UTILSQL.GetDistinctColumn("Category");
@@ -36,8 +41,22 @@ namespace SampleNote.Main.Modals
             }
         }
 
+        private void DataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                UTILSQL.setNickname(DataGrid[0, e.RowIndex].Value.ToString(), DataGrid[1, e.RowIndex].Value.ToString());
+            }
+            catch
+            {
+
+            }
+            
+        }
+
         private void button_exitform_Click(object sender, EventArgs e)
         {
+            
             this.Close();
         }
 
@@ -49,10 +68,11 @@ namespace SampleNote.Main.Modals
                 return;
             }
 
-            if (UTILSQL.Append(new string[] { tb_Code.Text, tb_TestName.Text, cbx_category.Text }))
+            if (UTILSQL.Append(new string[] { tb_Code.Text, tb_TestName.Text, cbx_category.Text, tb_Nickname.Text }))
             {
                 DataGrid.Rows.Add(new string[] {
                         tb_Code.Text,
+                        tb_Nickname.Text,
                         tb_TestName.Text,
                         cbx_category.Text});
             }

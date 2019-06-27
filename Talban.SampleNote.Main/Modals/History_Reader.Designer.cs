@@ -87,6 +87,7 @@
             // 
             // panel_logs
             // 
+            this.panel_logs.AutoScroll = true;
             this.panel_logs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.panel_logs.Controls.Add(this.panel1);
             this.panel_logs.Font = new System.Drawing.Font("Consolas", 9F);

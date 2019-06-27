@@ -15,10 +15,12 @@ namespace SampleNote.Main.Utility
         bool dragging = false;
         bool sizable = false;
         bool canHideHeader = false;
+        bool lockedHeader = false;
         int origin_offsetX = 0;
         int origin_offsetY = 0;
         int normalHeight = 0;
         int minimizedHeaderSize = 5;
+
 
         public HeaderUtility(Panel header, bool sizable = false, bool canHideHeader = false)
         {
@@ -37,16 +39,30 @@ namespace SampleNote.Main.Utility
             {
                 header.MouseEnter += Header_MouseEnter;
                 header.MouseLeave += Header_MouseLeave;
+                header.MouseClick += Header_MouseClick;
                 form_object.SizeChanged += Header_SizeChanged;
             }
         }
         
+        private void Header_MouseClick(object sender, MouseEventArgs e)
+        {
+            // User right clicked header, lock
+            if (e.Button == MouseButtons.Right)
+            {
+                lockedHeader = !lockedHeader;
+                
+            }
+        }
+
         private void Header_SizeChanged(object sender, EventArgs e)
         {
             if (form_object.WindowState == FormWindowState.Maximized)
             {
-                header_object.Height = minimizedHeaderSize;
-                return;
+                if (!lockedHeader)
+                {
+                    header_object.Height = minimizedHeaderSize;
+                    return;
+                }
             }
             header_object.Height = normalHeight;            
         }
@@ -79,7 +95,10 @@ namespace SampleNote.Main.Utility
                 {
                     timer.Enabled = false;
                     timer.Dispose();
-                    header_object.Height = minimizedHeaderSize;
+                    if (!lockedHeader)
+                    {
+                        header_object.Height = minimizedHeaderSize;
+                    }
                     timerInPlace = false;
                 }
             };

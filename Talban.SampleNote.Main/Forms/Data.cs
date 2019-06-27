@@ -33,7 +33,7 @@ namespace SampleNote.Main.Forms
             testlist = new testlist_module(listbox_testlist, textbox_filtersearch, label_itemcount, LABEL_LTestsRequiredList, items, UTILSQL);
             this.remoteAPI = remoteAPI;
             this.userControl = userControl;
-            this.button_samplenumber.Text = remoteAPI.pull_samplenum(1);
+            this.button_samplenumber.Text = remoteAPI.pull_samplenum();
             lock_fields.Click += fieldLockMethod;
             lock_fields1.Click += fieldLockMethod;
             this.column_data = remoteAPI.fetch_columndata(inverted:true);
@@ -54,7 +54,7 @@ namespace SampleNote.Main.Forms
             LABEL_LClient.DataBindings.Add(binding_label_client);
             LABEL_LProjectNumber.DataBindings.Add(binding_label_projnumber);
             LABEL_LProjectName.DataBindings.Add(binding_label_projname);
-            
+            CHECKBOX_PrintLabel.Checked = new Modules.DYMOLabelWriter().checkAvailable();
         }
         
         private void fieldLockMethod(object sender, EventArgs e)
@@ -69,12 +69,13 @@ namespace SampleNote.Main.Forms
                 fieldLock.Image = image_locked;
             }
         }
-
+        
+        // Creating a seperate class for the test list module is unecessary but is quite more usable
         class testlist_module
         {
             //string testsFile = @"./config/test_list.dat";
             Utility.UTILSQL_TestCode UTILSQL;
-            List<string> TestNames;
+            List<string[]> TestNames;
             ListBox listbox_testlist;
             TextBox textbox_filtersearch;
             Label label_itemcount;
@@ -110,7 +111,19 @@ namespace SampleNote.Main.Forms
             {
                 listbox_testlist.Items.Clear();
                 //listbox_testlist.Items.AddRange(System.IO.File.ReadAllLines(testsFile));
-                listbox_testlist.Items.AddRange(TestNames.ToArray());
+                foreach (string[] test_data in TestNames)
+                {
+                    if (test_data.Length > 1)
+                    {
+                        listbox_testlist.Items.Add(test_data[1]);
+                    }
+                    else
+                    {
+                        listbox_testlist.Items.Add(test_data[0]);
+                    }
+
+                }
+                // Will not work as its a string array now. listbox_testlist.Items.AddRange(TestNames.ToArray());
                 reselect();
             }
 
@@ -123,9 +136,9 @@ namespace SampleNote.Main.Forms
                     if (listbox_testlist.Items.Contains(item) && listbox_testlist.SelectedItems.Contains(item) == false)
                     {
                         listbox_testlist.SelectedItems.Add(item);
-                        
                     }
                 }
+                displayToTestList();
                 label_itemcount.Text = string.Format("{0} Selected", items.Count.ToString());
                 reselecting = false;
             }
@@ -163,22 +176,30 @@ namespace SampleNote.Main.Forms
                     }
                 }
 
-                label_testList.Text = "";
-                foreach (string selection in listbox_testlist.SelectedItems)
-                {
-                    label_testList.Text += string.Format("- {0}{1}", selection, Environment.NewLine);
-                }
+                displayToTestList();
                 label_itemcount.Text = string.Format("{0} Selected", items.Count.ToString());
             }
             
+            private void displayToTestList()
+            {
+                label_testList.Text = "";
+                foreach (string selection in items)
+                {
+                    label_testList.Text += string.Format("- {0}{1}", selection, Environment.NewLine);
+                }
+            }
             private void filterString(string filterText)
             {
                 List<string> filteredStrings = new List<string>();
-                foreach (string line in TestNames)//File.ReadAllLines(testsFile))
+                foreach (string[] line in TestNames)//File.ReadAllLines(testsFile))
                 {
-                    if (line.Contains(filterText))
+                    if (line[0].Contains(filterText))
                     {
-                        filteredStrings.Add(line);
+                        filteredStrings.Add(line[0]);
+                    }
+                    else if (line.Length > 1 && line[1].Contains(filterText))
+                    {
+                        filteredStrings.Add(line[1]);
                     }
                 }
 
@@ -235,8 +256,8 @@ namespace SampleNote.Main.Forms
             return true;
         }
         
-        // Parse all field Data
-        private Dictionary<string, string> read_fieldData()
+        // Parse all field Data (Parameter for clearing all fields when read)
+        private Dictionary<string, string> read_fieldData(bool ClearAfterRead=true)
         {
             Dictionary<string, string> field_data = new Dictionary<string, string>();
 
@@ -279,7 +300,10 @@ namespace SampleNote.Main.Forms
             // Test Required
             field_data.Add(listbox_testlist.Tag.ToString(), itemString);
             
-            clear_fields();
+            if (ClearAfterRead)
+            {
+                clear_fields();
+            }
             return field_data;
         }
 
@@ -547,7 +571,7 @@ namespace SampleNote.Main.Forms
             text_editor.FormClosed += onEditorClosed;
             */
         }
-
+        
         private void label_testlist_MouseEnter(object sender, EventArgs e)
         {
             (sender as Label).Text = "+ Test List";
@@ -579,13 +603,25 @@ namespace SampleNote.Main.Forms
         private void btnPreviewAdmit_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Modals.Admittance_Info adInfo = new Modals.Admittance_Info(listbox_testlist.SelectedItems);
-            adInfo.ShowDialog();
-            adInfo.FormClosed += (s, _) =>
+            List<string> selections = new List<string>();
+            foreach (string selection in listbox_testlist.SelectedItems)
             {
-                this.Show();
-                adInfo.Dispose();
-            };
+                selections.Add(selection);
+            }
+
+            Modals.Admittance_Info adInfo = new Modals.Admittance_Info(selections, read_fieldData(ClearAfterRead:false), this);
+            adInfo.ShowDialog();
+            
         }
+
+        private void TestsListContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            if (listbox_testlist.SelectedItems.Count == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
+
     }
 }

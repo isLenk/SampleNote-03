@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SampleNote.Main.Utility
 {
-    class TweenUtility
+    public class TweenUtility
     {
         public void TweenSize(object obj, Point goalPosition, int intervalRate = 1, int incrementRate = 5)
         {

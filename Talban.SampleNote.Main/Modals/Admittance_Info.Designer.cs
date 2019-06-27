@@ -44,7 +44,6 @@
             this.lbl_dailyRate = new System.Windows.Forms.Label();
             this.lbl_unit = new System.Windows.Forms.Label();
             this.btnPreviewPrint = new System.Windows.Forms.Button();
-            this.btnClearFields = new System.Windows.Forms.Button();
             this.groupbox_TimeInfo = new System.Windows.Forms.GroupBox();
             this.tb_Other = new System.Windows.Forms.TextBox();
             this.tb_Testing = new System.Windows.Forms.TextBox();
@@ -226,21 +225,6 @@
             this.btnPreviewPrint.TabIndex = 5;
             this.btnPreviewPrint.Text = "Preview Print";
             this.btnPreviewPrint.UseVisualStyleBackColor = false;
-            // 
-            // btnClearFields
-            // 
-            this.btnClearFields.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearFields.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
-            this.btnClearFields.FlatAppearance.BorderSize = 0;
-            this.btnClearFields.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearFields.ForeColor = System.Drawing.Color.Black;
-            this.btnClearFields.Location = new System.Drawing.Point(399, 359);
-            this.btnClearFields.Name = "btnClearFields";
-            this.btnClearFields.Size = new System.Drawing.Size(116, 33);
-            this.btnClearFields.TabIndex = 6;
-            this.btnClearFields.Text = "Clear Fields";
-            this.btnClearFields.UseVisualStyleBackColor = false;
-            this.btnClearFields.Click += new System.EventHandler(this.btnClearFields_Click);
             // 
             // groupbox_TimeInfo
             // 
@@ -424,7 +408,6 @@
             this.Controls.Add(this.tb_Remarks);
             this.Controls.Add(this.groupbox_Other);
             this.Controls.Add(this.groupbox_TimeInfo);
-            this.Controls.Add(this.btnClearFields);
             this.Controls.Add(this.btnPreviewPrint);
             this.Controls.Add(this.groupbox_VehicleInfo);
             this.Controls.Add(this.Form_Header);
@@ -464,7 +447,6 @@
         private System.Windows.Forms.ComboBox cbx_TripsToSite;
         private System.Windows.Forms.ComboBox cbx_DailyRate;
         private System.Windows.Forms.Button btnPreviewPrint;
-        private System.Windows.Forms.Button btnClearFields;
         private System.Windows.Forms.GroupBox groupbox_TimeInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

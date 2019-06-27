@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -48,15 +48,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>SampleNote.Main.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>samplenote.256.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DYMO.Label.Framework">
-      <HintPath>bin\Debug\Lib\DYMO.Label.Framework.dll</HintPath>
+    <Reference Include="DYMO.DLS.Runtime, Version=8.3.1.1332, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DYMO\DYMO Label Software\Framework\DYMO.DLS.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DYMO.Label.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DYMO\DYMO Label Software\Framework\DYMO.Label.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -64,6 +68,7 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>bin\Debug\Lib\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +80,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Designer\GeneralFormArchitect.cs" />
+    <Compile Include="Designer\MonitorPassenger.cs" />
+    <Compile Include="Interfaces\IFormArchitect.cs" />
+    <Compile Include="Designer\MainDriver.cs" />
     <Compile Include="Modals\Admittance_Info.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +114,29 @@
     <Compile Include="Forms\Monitor.Designer.cs">
       <DependentUpon>Monitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modals\cPrintPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\cPrintPreviewDialog.Designer.cs">
+      <DependentUpon>cPrintPreviewDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\DYMOLabel_PrintPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\DYMOLabel_PrintPreview.Designer.cs">
+      <DependentUpon>DYMOLabel_PrintPreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modals\History_Reader.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modals\History_Reader.Designer.cs">
       <DependentUpon>History_Reader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\LogDeletionConfirmation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modals\LogDeletionConfirmation.Designer.cs">
+      <DependentUpon>LogDeletionConfirmation.cs</DependentUpon>
     </Compile>
     <Compile Include="Modals\SQLReader.TestCodes.cs">
       <SubType>Form</SubType>
@@ -129,7 +156,7 @@
     <Compile Include="Forms\User_Control.Designer.cs">
       <DependentUpon>User_Control.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_Editor\SampleLog.editor.cs" />
+    <Compile Include="Designer\SampleLog.editor.cs" />
     <Compile Include="Modules\API.Remote.cs" />
     <Compile Include="Modules\History.Remote.cs" />
     <Compile Include="Program.cs" />
@@ -138,6 +165,7 @@
     <Compile Include="Utility\ConfigUtility.cs" />
     <Compile Include="Utility\HeaderUtility.cs" />
     <Compile Include="Utility\StringParserUtility.cs" />
+    <Compile Include="Utility\TextScrollUtility.cs" />
     <Compile Include="Utility\TooltipUtility.cs" />
     <Compile Include="Utility\TweenUtility.cs" />
     <EmbeddedResource Include="Modals\Admittance_Info.resx">
@@ -155,8 +183,17 @@
     <EmbeddedResource Include="Forms\Monitor.resx">
       <DependentUpon>Monitor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Modals\cPrintPreviewDialog.resx">
+      <DependentUpon>cPrintPreviewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modals\DYMOLabel_PrintPreview.resx">
+      <DependentUpon>DYMOLabel_PrintPreview.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modals\History_Reader.resx">
       <DependentUpon>History_Reader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modals\LogDeletionConfirmation.resx">
+      <DependentUpon>LogDeletionConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modals\SQLReader.TestCodes.resx">
       <DependentUpon>SQLReader.TestCodes.cs</DependentUpon>
@@ -178,6 +215,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Modules\DYMO.Framework.Handler.cs" />
+    <None Include="Resources\config\general.path.config" />
     <None Include="Resources\config\monitor.column.positions.config" />
     <None Include="Resources\config\column.positions.config" />
     <None Include="Resources\config\PrintTag.label" />

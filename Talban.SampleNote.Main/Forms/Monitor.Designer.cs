@@ -36,6 +36,7 @@
             this.button_exitform = new System.Windows.Forms.Button();
             this.FormName = new System.Windows.Forms.Label();
             this.panel_columns = new System.Windows.Forms.Panel();
+            this.H = new System.Windows.Forms.Label();
             this.M = new System.Windows.Forms.Label();
             this.G = new System.Windows.Forms.Label();
             this.F = new System.Windows.Forms.Label();
@@ -138,6 +139,7 @@
             // 
             this.panel_columns.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel_columns.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(43)))));
+            this.panel_columns.Controls.Add(this.H);
             this.panel_columns.Controls.Add(this.M);
             this.panel_columns.Controls.Add(this.G);
             this.panel_columns.Controls.Add(this.F);
@@ -153,6 +155,21 @@
             this.panel_columns.Size = new System.Drawing.Size(1162, 45);
             this.panel_columns.TabIndex = 6;
             // 
+            // H
+            // 
+            this.H.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.H.AutoSize = true;
+            this.H.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.H.ForeColor = System.Drawing.Color.White;
+            this.H.Location = new System.Drawing.Point(858, 17);
+            this.H.Margin = new System.Windows.Forms.Padding(0);
+            this.H.Name = "H";
+            this.H.Size = new System.Drawing.Size(124, 16);
+            this.H.TabIndex = 7;
+            this.H.Tag = "Samp. Location";
+            this.H.Text = "Sample Location";
+            // 
             // M
             // 
             this.M.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -160,7 +177,7 @@
             this.M.AutoSize = true;
             this.M.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.M.ForeColor = System.Drawing.Color.White;
-            this.M.Location = new System.Drawing.Point(917, 17);
+            this.M.Location = new System.Drawing.Point(1016, 17);
             this.M.Margin = new System.Windows.Forms.Padding(0);
             this.M.Name = "M";
             this.M.Size = new System.Drawing.Size(125, 16);
@@ -179,7 +196,7 @@
             this.G.Margin = new System.Windows.Forms.Padding(0);
             this.G.Name = "G";
             this.G.Size = new System.Drawing.Size(144, 16);
-            this.G.TabIndex = 7;
+            this.G.TabIndex = 6;
             this.G.Tag = "Samp. Description";
             this.G.Text = "Sample Description";
             // 
@@ -194,7 +211,7 @@
             this.F.Margin = new System.Windows.Forms.Padding(0);
             this.F.Name = "F";
             this.F.Size = new System.Drawing.Size(112, 16);
-            this.F.TabIndex = 6;
+            this.F.TabIndex = 5;
             this.F.Tag = "Date Recieved";
             this.F.Text = "Date Recieved";
             // 
@@ -209,7 +226,7 @@
             this.E.Margin = new System.Windows.Forms.Padding(0);
             this.E.Name = "E";
             this.E.Size = new System.Drawing.Size(92, 16);
-            this.E.TabIndex = 5;
+            this.E.TabIndex = 4;
             this.E.Tag = "Client Name";
             this.E.Text = "Client Name";
             // 
@@ -225,7 +242,7 @@
             this.C.Margin = new System.Windows.Forms.Padding(0);
             this.C.Name = "C";
             this.C.Size = new System.Drawing.Size(102, 16);
-            this.C.TabIndex = 4;
+            this.C.TabIndex = 3;
             this.C.Tag = "Project Name";
             this.C.Text = "Project Name";
             // 
@@ -240,7 +257,7 @@
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 16);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 2;
             this.label2.Tag = "Project Number";
             this.label2.Text = "Project #";
             // 
@@ -255,7 +272,7 @@
             this.A.Margin = new System.Windows.Forms.Padding(0);
             this.A.Name = "A";
             this.A.Size = new System.Drawing.Size(73, 16);
-            this.A.TabIndex = 2;
+            this.A.TabIndex = 1;
             this.A.Tag = "Sample Number";
             this.A.Text = "Sample #";
             // 
@@ -367,6 +384,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(78)))), ((int)(((byte)(135)))));
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.label7.Location = new System.Drawing.Point(3, 18);
@@ -466,7 +484,6 @@
         private System.Windows.Forms.Label label_clock;
         private System.Windows.Forms.PictureBox BORDER;
         private System.Windows.Forms.Panel panel_columns;
-        private System.Windows.Forms.Label M;
         private System.Windows.Forms.Label G;
         private System.Windows.Forms.Label F;
         private System.Windows.Forms.Label E;
@@ -487,5 +504,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolTip DataExpansionTooltip;
+        private System.Windows.Forms.Label H;
+        private System.Windows.Forms.Label M;
     }
 }

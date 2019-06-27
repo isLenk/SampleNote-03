@@ -26,14 +26,14 @@ namespace SampleNote.Main.Forms
         bool processingFile = false;
 
         string xml_apis = @"./background/api.available.xml";
-        
+
         public Launcher()
         {
             InitializeComponent();
 
             new Utility.HeaderUtility(Form_Header);
             new Utility.TooltipUtility(ToolTip);
- 
+
             // Add APIs to drop down
             XmlReader xmlReader = XmlReader.Create(xml_apis);
             while (xmlReader.Read())
@@ -44,8 +44,8 @@ namespace SampleNote.Main.Forms
                 {
                     string api_name = xmlReader.GetAttribute("name").ToString();
                     string api_ext = "";
-                    Console.WriteLine(String.Format("Try: {0}", api_name) );
-                    
+                    Console.WriteLine(String.Format("Try: {0}", api_name));
+
                     XmlReader subReader = xmlReader.ReadSubtree();
                     while (subReader.Read())
                     {
@@ -55,7 +55,7 @@ namespace SampleNote.Main.Forms
                             case "extensions":
                                 api_ext = subReader.ReadElementContentAsString();
                                 break;
-
+                                
                             case "module":
                                 string module_value = subReader.ReadElementContentAsString();
                                 Console.WriteLine(String.Format("Fetching: {0}", module_value));
@@ -64,7 +64,7 @@ namespace SampleNote.Main.Forms
                                     Console.WriteLine("DLL Module Exists");
                                     // Insert new element to List
                                     Console.WriteLine(api_name);
-                                    API_List.Add(api_name, new string[2]{ module_value, api_ext});
+                                    API_List.Add(api_name, new string[2] { module_value, api_ext });
                                 }
                                 break;
                         }
@@ -78,7 +78,7 @@ namespace SampleNote.Main.Forms
 
             panel_loadscreen.Visible = false;
             panel_loadscreen.Size = new Size(776, 376);
-            
+
             foreach (string path in File.ReadAllLines(@"./recent/recent.log.dat"))
             {
                 if (File.Exists(path) && !recentFiles.Contains(path))
@@ -127,7 +127,7 @@ namespace SampleNote.Main.Forms
             dialog_newFile.Filter = API_List[api_name][1];
             dialog_openFile.Filter = API_List[api_name][1];
         }
-        
+
         private void button_newfile_Click(object sender, EventArgs e)
         {
             if (dialog_newFile.ShowDialog() == DialogResult.OK)
@@ -156,7 +156,7 @@ namespace SampleNote.Main.Forms
             if (File.Exists(fileName))
             {
                 FileInfo f = new FileInfo(fileName);
-                label_filesize.Text = ( f.Length/1024 ).ToString() + "kb";
+                label_filesize.Text = (f.Length / 1024).ToString() + "kb";
             }
             Tween.TweenSize(panel_projectdata, new Point(0, panel_projectdata.Height), 1, 10);
         }
@@ -197,10 +197,10 @@ namespace SampleNote.Main.Forms
             panel_loadscreen.Visible = true;
 
             remoteAPI.Set_API(selectedAPIKey);
-             
+
             Console.WriteLine("Sumitting New File");
             Console.WriteLine("Registering: " + label_filepath.Text);
-            
+
             if (selectedOption == "create")
             {
                 remoteAPI.create_file(label_filepath.Text, input_password.Text);
@@ -220,11 +220,11 @@ namespace SampleNote.Main.Forms
                 }
 
             }
-            
+
             displayPrompt("access");
             addPathToRecent(label_filepath.Text);
             displayPrompt("reading_log");
-            
+
             new Forms.User_Control(remoteAPI);
             this.Hide();
         }
@@ -240,7 +240,7 @@ namespace SampleNote.Main.Forms
 
         private void checkbox_showpassword_CheckedChanged(object sender, EventArgs e)
         {
-                input_password.UseSystemPasswordChar = !checkbox_showpassword.Checked;
+            input_password.UseSystemPasswordChar = !checkbox_showpassword.Checked;
         }
 
         private void Launcher_DragEnter(object sender, DragEventArgs e)
@@ -252,7 +252,7 @@ namespace SampleNote.Main.Forms
             picturebox_upload.Location = new Point(picturebox_upload.Location.X, 95);
             timer.Tick += (s, _) =>
             {
-                picturebox_upload.Location = new Point(picturebox_upload.Location.X, 95+increment);
+                picturebox_upload.Location = new Point(picturebox_upload.Location.X, 95 + increment);
                 if (increment >= 5)
                 {
                     increment = 5;
@@ -262,7 +262,7 @@ namespace SampleNote.Main.Forms
                 }
                 increment++;
             };
-            
+
             panel_dragdropoutside.Visible = true;
             panel_dragdropoutside.Size = new Size(776, 373);
             picturebox_upload.Image = Properties.Resources.Upload_Graphic;
@@ -272,7 +272,7 @@ namespace SampleNote.Main.Forms
             if (e.Data.GetDataPresent(DataFormats.FileDrop) && !processingFile)
             {
                 e.Effect = DragDropEffects.Link;
-            }    
+            }
         }
 
         private void Launcher_DragLeave(object sender, EventArgs e)
@@ -280,7 +280,7 @@ namespace SampleNote.Main.Forms
             picturebox_upload.Location = new Point(picturebox_upload.Location.X, 95);
             panel_dragdropoutside.Visible = false;
         }
-        
+
         private void reset_ddrop()
         {
             Timer timer = new Timer();
@@ -360,7 +360,7 @@ namespace SampleNote.Main.Forms
                         {
                             fileType = key.Replace(".dll", string.Empty);
                             selectedFile = file;
-                            Console.WriteLine("Drop Selected Key:" + fileType );
+                            Console.WriteLine("Drop Selected Key:" + fileType);
                         }
                     }
                 }
@@ -383,9 +383,9 @@ namespace SampleNote.Main.Forms
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
 
-            
+
+
         }
 
         private void addPathToRecent(string path)
@@ -400,7 +400,7 @@ namespace SampleNote.Main.Forms
                 String.Format("{0}{1}",
                     path,
                     Environment.NewLine));
-            
+
         }
 
         private void listbox_recentFiles_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -410,7 +410,8 @@ namespace SampleNote.Main.Forms
             {
 
                 string filename = listbox_recentFiles.Items[index].ToString();
-                if (filename == "None") {
+                if (filename == "None")
+                {
                     return;
                 }
                 foreach (string pathString in File.ReadAllLines(@"./recent/recent.log.dat"))
@@ -430,17 +431,9 @@ namespace SampleNote.Main.Forms
             Application.Exit();
         }
 
-        private void btnPrintPreview_Click(object sender, EventArgs e)
+        private void dropdown_selectedApi_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Hide();
-            Modals.Admittance_Info adInfo = new Modals.Admittance_Info();
-            adInfo.ShowDialog();
-            adInfo.FormClosed += (s, _) =>
-            {
-                this.Show();
-                adInfo.Dispose();
-            };
+            selectAPI(dropdown_selectedApi.Text);
         }
     }
-    
 }

@@ -6,9 +6,9 @@
     <module>ExcelAPI.dll</module>
   </api>
 
-  <api name="LCSS">
-    <extensions>Lances Custom SSheet|*.lcss</extensions>
-    <module>LCSSAPI.dll</module>
+  <api name="SQLite API">
+    <extensions>SQLite Database|*.db</extensions>
+    <module>SQLiteAPI.dll</module>
   </api>
   
 </apis>

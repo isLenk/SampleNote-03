@@ -33,9 +33,6 @@
             this.button_exitform = new System.Windows.Forms.Button();
             this.FormName = new System.Windows.Forms.Label();
             this.DataGrid = new System.Windows.Forms.DataGridView();
-            this.NCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tb_Code = new System.Windows.Forms.TextBox();
             this.lbl_Code = new System.Windows.Forms.Label();
             this.lbl_TestName = new System.Windows.Forms.Label();
@@ -43,6 +40,12 @@
             this.lbl_Category = new System.Windows.Forms.Label();
             this.cbx_category = new System.Windows.Forms.ComboBox();
             this.btn_AddRecord = new System.Windows.Forms.Button();
+            this.tb_Nickname = new System.Windows.Forms.TextBox();
+            this.lblNickname = new System.Windows.Forms.Label();
+            this.NCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TestName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Form_Header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).BeginInit();
             this.SuspendLayout();
@@ -56,7 +59,7 @@
             this.Form_Header.Location = new System.Drawing.Point(0, 0);
             this.Form_Header.Margin = new System.Windows.Forms.Padding(10, 18, 10, 18);
             this.Form_Header.Name = "Form_Header";
-            this.Form_Header.Size = new System.Drawing.Size(950, 35);
+            this.Form_Header.Size = new System.Drawing.Size(1154, 35);
             this.Form_Header.TabIndex = 3;
             // 
             // button_exitform
@@ -70,7 +73,7 @@
             this.button_exitform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_exitform.Font = new System.Drawing.Font("Trebuchet MS", 10F);
             this.button_exitform.ForeColor = System.Drawing.Color.White;
-            this.button_exitform.Location = new System.Drawing.Point(825, 0);
+            this.button_exitform.Location = new System.Drawing.Point(1029, 0);
             this.button_exitform.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.button_exitform.Name = "button_exitform";
             this.button_exitform.Size = new System.Drawing.Size(125, 35);
@@ -104,41 +107,23 @@
             this.DataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NCode,
+            this.Nickname,
             this.TestName,
             this.Category});
-            this.DataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.DataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.DataGrid.Location = new System.Drawing.Point(15, 45);
             this.DataGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DataGrid.Name = "DataGrid";
             this.DataGrid.ShowEditingIcon = false;
-            this.DataGrid.Size = new System.Drawing.Size(921, 394);
+            this.DataGrid.Size = new System.Drawing.Size(1125, 450);
             this.DataGrid.TabIndex = 4;
-            // 
-            // NCode
-            // 
-            this.NCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.NCode.HeaderText = "Code";
-            this.NCode.Name = "NCode";
-            this.NCode.Width = 80;
-            // 
-            // TestName
-            // 
-            this.TestName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TestName.HeaderText = "Test Name";
-            this.TestName.Name = "TestName";
-            // 
-            // Category
-            // 
-            this.Category.HeaderText = "Category";
-            this.Category.Name = "Category";
-            this.Category.Width = 140;
             // 
             // tb_Code
             // 
             this.tb_Code.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tb_Code.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tb_Code.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Code.Location = new System.Drawing.Point(66, 453);
+            this.tb_Code.Location = new System.Drawing.Point(66, 508);
             this.tb_Code.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tb_Code.Name = "tb_Code";
             this.tb_Code.Size = new System.Drawing.Size(117, 19);
@@ -149,7 +134,7 @@
             this.lbl_Code.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_Code.AutoSize = true;
             this.lbl_Code.ForeColor = System.Drawing.Color.White;
-            this.lbl_Code.Location = new System.Drawing.Point(18, 451);
+            this.lbl_Code.Location = new System.Drawing.Point(18, 510);
             this.lbl_Code.Name = "lbl_Code";
             this.lbl_Code.Size = new System.Drawing.Size(42, 18);
             this.lbl_Code.TabIndex = 6;
@@ -160,7 +145,7 @@
             this.lbl_TestName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_TestName.AutoSize = true;
             this.lbl_TestName.ForeColor = System.Drawing.Color.White;
-            this.lbl_TestName.Location = new System.Drawing.Point(200, 451);
+            this.lbl_TestName.Location = new System.Drawing.Point(406, 510);
             this.lbl_TestName.Name = "lbl_TestName";
             this.lbl_TestName.Size = new System.Drawing.Size(74, 18);
             this.lbl_TestName.TabIndex = 7;
@@ -171,7 +156,7 @@
             this.tb_TestName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tb_TestName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tb_TestName.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_TestName.Location = new System.Drawing.Point(280, 451);
+            this.tb_TestName.Location = new System.Drawing.Point(486, 509);
             this.tb_TestName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tb_TestName.Name = "tb_TestName";
             this.tb_TestName.Size = new System.Drawing.Size(255, 19);
@@ -182,7 +167,7 @@
             this.lbl_Category.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_Category.AutoSize = true;
             this.lbl_Category.ForeColor = System.Drawing.Color.White;
-            this.lbl_Category.Location = new System.Drawing.Point(550, 451);
+            this.lbl_Category.Location = new System.Drawing.Point(747, 510);
             this.lbl_Category.Name = "lbl_Category";
             this.lbl_Category.Size = new System.Drawing.Size(65, 18);
             this.lbl_Category.TabIndex = 9;
@@ -193,7 +178,7 @@
             this.cbx_category.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbx_category.Font = new System.Drawing.Font("Arial Narrow", 10F);
             this.cbx_category.FormattingEnabled = true;
-            this.cbx_category.Location = new System.Drawing.Point(621, 449);
+            this.cbx_category.Location = new System.Drawing.Point(818, 505);
             this.cbx_category.Name = "cbx_category";
             this.cbx_category.Size = new System.Drawing.Size(181, 24);
             this.cbx_category.TabIndex = 10;
@@ -207,7 +192,7 @@
             this.btn_AddRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_AddRecord.Font = new System.Drawing.Font("Trebuchet MS", 10F);
             this.btn_AddRecord.ForeColor = System.Drawing.Color.White;
-            this.btn_AddRecord.Location = new System.Drawing.Point(808, 449);
+            this.btn_AddRecord.Location = new System.Drawing.Point(1005, 505);
             this.btn_AddRecord.Name = "btn_AddRecord";
             this.btn_AddRecord.Size = new System.Drawing.Size(128, 23);
             this.btn_AddRecord.TabIndex = 11;
@@ -215,12 +200,64 @@
             this.btn_AddRecord.UseVisualStyleBackColor = false;
             this.btn_AddRecord.Click += new System.EventHandler(this.btn_AddRecord_Click);
             // 
+            // tb_Nickname
+            // 
+            this.tb_Nickname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_Nickname.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_Nickname.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Nickname.Location = new System.Drawing.Point(269, 509);
+            this.tb_Nickname.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tb_Nickname.Name = "tb_Nickname";
+            this.tb_Nickname.Size = new System.Drawing.Size(131, 19);
+            this.tb_Nickname.TabIndex = 13;
+            // 
+            // lblNickname
+            // 
+            this.lblNickname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblNickname.AutoSize = true;
+            this.lblNickname.ForeColor = System.Drawing.Color.White;
+            this.lblNickname.Location = new System.Drawing.Point(193, 510);
+            this.lblNickname.Name = "lblNickname";
+            this.lblNickname.Size = new System.Drawing.Size(70, 18);
+            this.lblNickname.TabIndex = 12;
+            this.lblNickname.Text = "Nickname:";
+            // 
+            // NCode
+            // 
+            this.NCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.NCode.HeaderText = "Code";
+            this.NCode.Name = "NCode";
+            this.NCode.ReadOnly = true;
+            this.NCode.Width = 80;
+            // 
+            // Nickname
+            // 
+            this.Nickname.HeaderText = "Nickname";
+            this.Nickname.Name = "Nickname";
+            this.Nickname.Width = 250;
+            // 
+            // TestName
+            // 
+            this.TestName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TestName.HeaderText = "Test Name";
+            this.TestName.Name = "TestName";
+            this.TestName.ReadOnly = true;
+            // 
+            // Category
+            // 
+            this.Category.HeaderText = "Category";
+            this.Category.Name = "Category";
+            this.Category.ReadOnly = true;
+            this.Category.Width = 140;
+            // 
             // SQLReader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ClientSize = new System.Drawing.Size(950, 492);
+            this.ClientSize = new System.Drawing.Size(1154, 537);
+            this.Controls.Add(this.tb_Nickname);
+            this.Controls.Add(this.lblNickname);
             this.Controls.Add(this.btn_AddRecord);
             this.Controls.Add(this.cbx_category);
             this.Controls.Add(this.lbl_Category);
@@ -258,7 +295,10 @@
         private System.Windows.Forms.Label lbl_Category;
         private System.Windows.Forms.ComboBox cbx_category;
         private System.Windows.Forms.Button btn_AddRecord;
+        private System.Windows.Forms.TextBox tb_Nickname;
+        private System.Windows.Forms.Label lblNickname;
         private System.Windows.Forms.DataGridViewTextBoxColumn NCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nickname;
         private System.Windows.Forms.DataGridViewTextBoxColumn TestName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Category;
     }

@@ -32,9 +32,9 @@ namespace SampleNote.Main.Modules
             {"Supplied By",         "I" },
             {"Sampled By",          "J" },
             {"Admitted By",         "K" },
-            {"Admittance Num.",     "L" },
-            {"Tests Required",      "M" },
-            {"Status",              "X" }
+//            {"Admittance Num.",     "L" },
+            {"Tests Required",      "L" },
+            {"Status",              "W" }
         };
         static _Application excelApp;
         static Workbook workbook;
@@ -47,7 +47,7 @@ namespace SampleNote.Main.Modules
         Color color_idle = Color.FromArgb(255, 0, 0, 0);
         Color color_started = Color.FromArgb(255, 20, 255, 120);
         Color color_finished = Color.FromArgb(255, 220, 25, 25);
-        Color color_logDone = Color.FromArgb(255, 130, 255, 95);
+        Color color_logDone = Color.FromArgb(255, 120, 255, 95);
 
         public ExcelAPI()
         {
@@ -138,6 +138,32 @@ namespace SampleNote.Main.Modules
             return String.Format(sample_indexformat, current_sampleindex);
         }
 
+        public bool delete_log(int index)
+        {
+            Console.WriteLine("DELETING ROW " + (index+4).ToString());
+            try
+            {
+                worksheet.Rows[index+4].Delete();
+                
+                if (!workbook.Saved)
+                {
+                    workbook.Save();
+                }
+                
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool compare_key(string key)
+        {
+            return protection_key == key;
+        }
+
         // Checks to see if there is a log with the same sample number
         public bool check_samplelogexists(int log_index)
         {
@@ -181,12 +207,12 @@ namespace SampleNote.Main.Modules
             foreach (string key in sample_columndata.Keys)
             {
                 string column_letter = sample_columndata[key];
-                if (key == "Tests Required") // M = 13, 
+                if (key == "Tests Required") // M = 12, 
                 {
                     string[] tests_recorded = new string[10];
                     for (int test_index = 0; test_index < 10; test_index++)
                     {
-                        Range cell_data = worksheet.Cells[index, test_index + 13];
+                        Range cell_data = worksheet.Cells[index, test_index + 12];
                         if (String.IsNullOrEmpty(cell_data.Value))
                         {
                             break;
@@ -224,7 +250,7 @@ namespace SampleNote.Main.Modules
         {
             index += 4;
             double cell_color = worksheet.Range[sample_columndata["Status"] + index.ToString()].Interior.Color;
-            if (cell_color == 6291330)
+            if (cell_color == 6291320)
             {
                 return true;
             }
@@ -241,22 +267,21 @@ namespace SampleNote.Main.Modules
                 Console.WriteLine("Throwing Excel Exception");
                 throw new Exception("Worksheet does not exist!");
             }
-
             string currentRange = (worksheet.UsedRange.Rows.Count + 1).ToString();
 
             Regex regex = new Regex(@"[^/./]+");
             // PATTERN: [/./]
             foreach (string logkey in log_data.Keys)
             {
+                
                 string logElement = log_data[logkey];
-
-                if (logkey == sample_columndata["Tests Required"]) // M = 13, 
+                if (logkey == sample_columndata["Tests Required"]) // M = 12, 
                 {
                     MatchCollection matches = regex.Matches(logElement);
 
                     for (int index = 0; index < matches.Count; index++)
                     {
-                        worksheet.Cells[currentRange, index + 13].Value = matches[index].Value;
+                        worksheet.Cells[currentRange, index + 12].Value = matches[index].Value;
                     }
 
                 }
@@ -330,10 +355,10 @@ namespace SampleNote.Main.Modules
                 }
             }
 
-            // Loop through test indexes 1 through 10 and add the +13 offset
+            // Loop through test indexes 1 through 10 and add the +12 offset
             for (int test_index = 0; test_index < 10; test_index++)
             {
-                Range cell_data = worksheet.Cells[log_index, 13 + test_index];
+                Range cell_data = worksheet.Cells[log_index, 12 + test_index];
                 double cell_color = cell_data.Font.Color;
 
                 // If the cell_data for some reason is null, then break out of loop.
@@ -343,8 +368,9 @@ namespace SampleNote.Main.Modules
                 }
 
                 // Only one Test
-                if (test_index == 0 && worksheet.Cells[log_index, 14].Value == null)
+                if (test_index == 0 && worksheet.Cells[log_index, 13].Value == null)
                 {
+                    Console.WriteLine(cell_color);
                     // Check to see for overwrite value
                     if (overwrite_status != -1)
                     {
@@ -378,6 +404,7 @@ namespace SampleNote.Main.Modules
                 }
                 else
                 {
+                    Console.WriteLine(cell_color);
                     // Test that is not the current one
                     if (cell_data.Value.ToString() != test_name &&
                         get_cellStat_fromColor(cell_color) != 3)
@@ -404,7 +431,7 @@ namespace SampleNote.Main.Modules
                                 newTestState = 3;
                             }
                             // Test Finished to Idle
-                            else //(cell_color == 1376120)
+                            else //(cell_color == 1276120)
                             {
                                 cell_data.Font.Color = color_idle;
                                 cell_data.Font.Strikethrough = false;
@@ -478,23 +505,23 @@ namespace SampleNote.Main.Modules
             Console.WriteLine("Creating new workbook");
             workbook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
             worksheet = workbook.ActiveSheet;
-
+            Console.WriteLine("Test");
             worksheet.Columns.ColumnWidth = 17;
 
-            Range header = worksheet.Range["A1:X3"];
+            Range header = worksheet.Range["A1:W3"];
             header.Merge();
             header.Value = "SampleNote Auto Generated Format: Avoid Modifying the cells.";
             header.HorizontalAlignment = XlHAlign.xlHAlignCenter;
             header.Interior.Color = Color.FromArgb(255, 34, 43, 53);
             header.Font.Color = XlRgbColor.rgbWhite;
 
-            Range column_headers = worksheet.Range["A4:X4"];
+            Range column_headers = worksheet.Range["A4:W4"];
             column_headers.Interior.Color = Color.FromArgb(255, 51, 63, 79);
             column_headers.Font.Color = XlRgbColor.rgbWhite;
             column_headers.RowHeight = 25;
             column_headers.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
-            worksheet.Range[sample_columndata["Tests Required"] + "4:W4"].Merge();
+            worksheet.Range[sample_columndata["Tests Required"] + "4:V4"].Merge();
 
 
             foreach (string column_key in sample_columndata.Keys)
@@ -545,7 +572,7 @@ namespace SampleNote.Main.Modules
             bool isNumeric = int.TryParse(last_samplenumRange.Value.ToString().Substring(1), out samplenum_index);
             if (isNumeric)
             {
-                current_sampleindex = samplenum_index;
+                current_sampleindex = samplenum_index + 1;
                 return;
             }
 
@@ -558,12 +585,12 @@ namespace SampleNote.Main.Modules
                 // Idle
                 if (cell_color == 0)
                 {
-                    return 1;
+                return 1;
                 }
                 // Started
                 else if (cell_color == 7929620)
                 {
-                    return 2;
+                return 2;
                 }
                 // Finished
                 else if (cell_color == 1645020)
@@ -573,7 +600,7 @@ namespace SampleNote.Main.Modules
                 // Default to Idle
                 else
                 {
-                    return 1;
+                return 1;
                 }
             }
     }

@@ -15,13 +15,13 @@ namespace SampleNote.Main.Forms
         Utility.ConfigUtility designer = new Utility.ConfigUtility(@"./config/usercontrol.designer.config");
         Utility.ConfigUtility config_columns = new Utility.ConfigUtility(@"./config/column.positions.config");
         Modules.API remoteAPI;
-        Forms.SampleLog_FormEditor editor;
+        Designer.MonitorPassenger editor;
         Dictionary<string, int> columnPositions = new Dictionary<string, int>();
         int panel_height;
         Label column_dragging = null;
         int column_offsetFromLeft = 0;
 
-        public Monitor(Modules.API remoteAPI, SampleLog_FormEditor ucEditor)
+        public Monitor(Modules.API remoteAPI, Designer.MainDriver ucEditor)
         {
             InitializeComponent();
             new Utility.HeaderUtility(Form_Header, sizable: true, canHideHeader: true);
@@ -51,12 +51,12 @@ namespace SampleNote.Main.Forms
                     //columnPositions.Add(columnObject.Tag.ToString(), columnObject.Location.X);
                 }
             }
-            editor = new Forms.SampleLog_FormEditor(panel_contents, remoteAPI, columnPositions, DataExpansionTooltip);
-            ucEditor.monitor_object = editor;
+            editor = new Designer.MonitorPassenger(panel_contents, remoteAPI, columnPositions, DataExpansionTooltip);
+            ucEditor.monitorObject = editor;
             // Apply location movements on the columns
             foreach (Control control_column in panel_columns.Controls)
             {
-                if (control_column is Label)
+                if (control_column is Label && control_column.TabIndex != 1)
                 {
                     control_column.MouseEnter += (s, _) => { control_column.ForeColor = Color.FromArgb(200, 200, 200); };
                     control_column.MouseLeave += (s, _) => { control_column.ForeColor = Color.White; };
@@ -64,6 +64,21 @@ namespace SampleNote.Main.Forms
                     control_column.MouseUp += (s, _) =>
                     {
                         adjustColumns();
+                        foreach (Control control in panel_contents.Controls)
+                        {
+                            if (control is Panel)
+                            {
+                                foreach (Control subControl in control.Controls)
+                                {
+                                    if (subControl is Label && subControl.Tag == column_dragging.Tag)
+                                    {
+                                        new Utility.TextScrollUtility().Add((Label)subControl);
+                                    }
+                                }
+                            }
+
+                        }
+
                         column_dragging = null;
                         config_columns[control_column.Tag.ToString()] = control_column.Location.X.ToString();
                     };
@@ -78,6 +93,7 @@ namespace SampleNote.Main.Forms
             columnPositions[column_dragging.Tag.ToString()] = column_dragging.Location.X;
             // Find the next columns left position
             int nextColumnLeft = 0;
+
             Control prevColumn = null;
             foreach (Control control in panel_columns.Controls)
             {
@@ -91,6 +107,7 @@ namespace SampleNote.Main.Forms
                     prevColumn = control;
                 }
             }
+            
 
             foreach (Control control in panel_contents.Controls)
             {
@@ -112,6 +129,8 @@ namespace SampleNote.Main.Forms
                             {
                                 //subControl.BackColor = Color.BlueViolet;
                                 subControl.Width = nextColumnLeft - column_dragging.Left - 5;
+
+                                new Utility.TextScrollUtility().Add((Label)subControl);
                             }
                         }
 
@@ -124,13 +143,14 @@ namespace SampleNote.Main.Forms
         {
             Label myColumn = sender as Label;
 
-            if (myColumn != column_dragging)
+            if (myColumn != column_dragging || column_dragging.TabIndex == 1)
             {
                 return;
             }
 
             Point cursor_relativePoint = this.PointToClient(Cursor.Position);
             int newX = cursor_relativePoint.X - column_offsetFromLeft;
+
             // Check for labels in contact
             foreach (Control otherColumn in panel_columns.Controls)
             {

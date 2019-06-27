@@ -18,7 +18,7 @@ namespace SampleNote.Main.Utility
 
 		public UTILSQL_TestCode()
         {
-			this.database = Path.Combine(Environment.CurrentDirectory, @"database\sample_tests.codes.db.bak");
+			this.database = Path.Combine(Environment.CurrentDirectory, @"database\sample_tests.codes.db");
             // Check to see if database exists
             if (!File.Exists(database))
             {
@@ -57,8 +57,6 @@ namespace SampleNote.Main.Utility
             List<string[]> Records = new List<string[]>();
             sql = "SELECT * FROM sample_tests";
             
-            
-
             using (command = new SQLiteCommand(sql, databaseConnection))
             {
                 using (SQLiteDataReader reader = command.ExecuteReader())
@@ -69,6 +67,7 @@ namespace SampleNote.Main.Utility
                             reader["NCode"].ToString(),
                             reader["TestName"].ToString(),
                             reader["Category"].ToString(),
+                            reader["Nickname"].ToString()
                         });
                     }
                 }
@@ -77,15 +76,34 @@ namespace SampleNote.Main.Utility
             return Records;
         }
 
+        public void setNickname(string NCode, string NName)
+        {
+            databaseConnection.Open();
+            try
+            {
+                sql = string.Format("UPDATE sample_tests SET Nickname='{0}' WHERE NCode='{1}'", NName, NCode);
+                command = new SQLiteCommand(sql, databaseConnection);
+                command.ExecuteNonQuery();
+
+            }
+            catch
+            {
+                Console.WriteLine("SQLITE Nickname: Could not set name");
+            }
+
+            databaseConnection.Close();
+        }
+
         public bool Append(string[] record_data)
         {
             databaseConnection.Open();
             try
             {
-                sql = string.Format("INSERT INTO sample_tests (NCode, TestName, Category) VALUES ('{0}', '{1}', '{2}')",
+                sql = string.Format("INSERT INTO sample_tests (NCode, TestName, Category, Nickname) VALUES ('{0}', '{1}', '{2}', '{3}')",
                     record_data[0],
                     record_data[1],
-                    record_data[2]);
+                    record_data[2],
+                    record_data[3]);
 
                 command = new SQLiteCommand(sql, databaseConnection);
                 command.ExecuteNonQuery();
@@ -120,10 +138,10 @@ namespace SampleNote.Main.Utility
             return ColumnData;
         }
 
-        public List<string> GetTestNames()
+        public List<string[]> GetTestNames()
         {
             databaseConnection.Open();
-            List<string> TestNames = new List<string>();
+            List<string[]> TestNames = new List<string[]>();
             sql = string.Format("SELECT * FROM sample_tests");
             using (command = new SQLiteCommand(sql, databaseConnection))
             {
@@ -134,7 +152,16 @@ namespace SampleNote.Main.Utility
                         // Exception (Category is Field Test)
                         if (reader["Category"].ToString() != "Field Test")
                         {
-                            TestNames.Add(reader["TestName"].ToString());
+
+                            if (String.IsNullOrEmpty(reader["Nickname"].ToString()))
+                            {
+                                TestNames.Add(new string[] { reader["TestName"].ToString() });
+                            }
+                            else
+                            {
+                                TestNames.Add(new string[] { reader["TestName"].ToString(), reader["Nickname"].ToString() });
+                            }
+                            
                         }
 
                     }
